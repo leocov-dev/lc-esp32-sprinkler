@@ -1,10 +1,11 @@
-#include <cstdio>
-#include <iostream>
+#include "../components/esp-sprinkler/ssd-1306-display.hpp"
+#include "esp_system.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "esp_system.h"
+#include <cstdio>
 #include <driver/i2c.h>
 #include <esp_log.h>
+#include <iostream>
 #include <sdkconfig.h>
 #include <sprinkler/app/app.hpp>
 
@@ -12,18 +13,15 @@ extern "C" {
 void app_main();
 }
 
-static char tag[] = "MAIN";
 
 void app_main() {
-//  App app(nullptr);
+  sprinkler::esp::SSD1306Display display(128, 64);
 
-  ESP_LOGD(tag, ">> task_simple_tests_ssd1306");
-  ESP_LOGD(tag, "<< task_simple_tests_ssd1306");
+  sprinkler::app::App app(&display);
+  app.init();
 
-  int i = 0;
-  while (1) {
-    printf("[%d] Hello world!\n", i);
-    i++;
-    vTaskDelay(5000 / portTICK_PERIOD_MS);
+  while (true) {
+    app.tick();
+    vTaskDelay(10 / portTICK_PERIOD_MS);
   }
 }

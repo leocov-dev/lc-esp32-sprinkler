@@ -3,17 +3,22 @@
 
 #include "sprinkler/input/input-event-handler.hpp"
 
-using namespace sprinkler::input;
+namespace sprinkler::sdl {
+
+namespace input = sprinkler::input;
 
 class SDLInputTranscriber {
  public:
-  explicit SDLInputTranscriber(InputEventHandler *handler) : handler_(handler) {}
-  void DispatchEvents();
-  bool ShouldQuit();
+  explicit SDLInputTranscriber(input::InputEventHandler *handler) : handler_(handler) {}
+
+  void dispatchEvents();
+  [[nodiscard]] bool shouldQuit() const;
  private:
-  InputEventHandler *handler_;
+  input::InputEventHandler *handler_;
   SDL_Event event_{};
   bool should_quit_ = false;
 };
+
+}  // namespace sprinkler::sdl
 
 #endif //LCESP32SPRINKLER_SDL2_LIB_SDL2_SDL_INPUT_TRANSCRIBER_HPP_

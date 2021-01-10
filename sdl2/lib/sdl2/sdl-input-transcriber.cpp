@@ -1,47 +1,52 @@
 #include <SDL.h>
 #include "sdl-input-transcriber.hpp"
 
-using namespace sprinkler::input;
-
-InputEvent Transcribe(SDL_Event &event) {
-  const auto action = event.type == SDL_KEYDOWN ? InputAction::kDown : InputAction::kUp;
+sprinkler::input::InputEvent Transcribe(SDL_Event &event) {
+  const auto action = event.type == SDL_KEYDOWN ? sprinkler::input::InputAction::kDown : sprinkler::input::InputAction::kUp;
 
   switch (event.key.keysym.sym) {
     case SDLK_RIGHT:
       return {
-          InputType::kNext,
+          sprinkler::input::InputType::kNext,
           action
       };
     case SDLK_LEFT:
       return {
-          InputType::kPrev,
+          sprinkler::input::InputType::kPrev,
           action
       };
     case SDLK_SPACE:
       return {
-          InputType::kSelect,
+          sprinkler::input::InputType::kSelect,
           action
       };
     default:
       return {
-          InputType::kUnknown,
-          InputAction::kUnknown
+          sprinkler::input::InputType::kUnknown,
+          sprinkler::input::InputAction::kUnknown
       };
   }
 }
 
-void SDLInputTranscriber::DispatchEvents() {
+void sprinkler::sdl::SDLInputTranscriber::dispatchEvents() {
   while (SDL_PollEvent(&event_)) {
-    if (event_.type == SDL_QUIT) {
-      should_quit_ = true;
-    } else if (event_.type == SDL_KEYDOWN ||
-        event_.type == SDL_KEYUP) {
-      if (handler_ != nullptr) {
-        handler_->HandleInputEvent(Transcribe(event_));
-      }
+    switch (event_.type) {
+      case SDL_QUIT:should_quit_ = true;
+        break;
+      case SDL_WINDOWEVENT:
+        switch (event_.window.event) {
+          case SDL_WINDOWEVENT_CLOSE:should_quit_ = true;
+            break;
+        }
+        break;
+      case SDL_KEYUP:
+      case SDL_KEYDOWN:
+        handler_->handleInputEvent(Transcribe(event_));
+        break;
     }
   }
 }
-bool SDLInputTranscriber::ShouldQuit() {
+
+bool sprinkler::sdl::SDLInputTranscriber::shouldQuit() const {
   return should_quit_;
 }

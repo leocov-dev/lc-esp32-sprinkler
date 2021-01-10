@@ -14,4 +14,6 @@ ninja -C"$BUILD_DIR"
 
 echo
 echo "###################  OPEN APP  ###################"
+echo
+
 "$BUILD_DIR/sdl2/sprinkler-sdl"

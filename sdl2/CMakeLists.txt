@@ -1,19 +1,28 @@
 cmake_minimum_required(VERSION 3.16)
-
 set(CMAKE_CXX_STANDARD 17)
-project(sprinkler-sdl LANGUAGES CXX)
+
+project(sprinkler-sdl
+    VERSION 0.0.0
+    LANGUAGES CXX)
 
 message("\n##################  SDL2 BUILD  ##################\n")
 
-set(SPRINKLER_SDL_TARGET sprinkler-sdl)
-
 ###################### Fetch ######################
 include(FetchContent)
+
+# SDL2
 FetchContent_Declare(sdl2_cmake GIT_REPOSITORY https://gitlab.com/aminosbh/sdl2-cmake-modules.git)
 FetchContent_GetProperties(sdl2_cmake)
 if (NOT sdl2_cmake_POPULATED)
     FetchContent_Populate(sdl2_cmake)
     list(APPEND CMAKE_MODULE_PATH ${sdl2_cmake_SOURCE_DIR})
+endif ()
+
+# mINI reader/writer
+FetchContent_Declare(m_ini GIT_REPOSITORY https://github.com/pulzed/mINI.git)
+FetchContent_GetProperties(m_ini)
+if (NOT m_ini_POPULATED)
+    FetchContent_Populate(m_ini)
 endif ()
 ################################################
 
@@ -21,25 +30,29 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_gfx REQUIRED)
 
-include_directories(lib)
-
 set(LIB
     SDL2::Main
     SDL2::TTF
     SDL2::GFX
-    lcSprinkler
+    liblcsprinkler
     )
 
 set(SOURCE
     src/main.cpp
     lib/sdl2/sdl-display.cpp
+    lib/sdl2/sdl-display.hpp
     lib/sdl2/sdl-input-transcriber.cpp
+    lib/sdl2/sdl-input-transcriber.hpp
+    lib/sdl2/sdl-output-visualizer.cpp
+    lib/sdl2/sdl-output-visualizer.hpp
+    lib/sdl2/sdl-utils.hpp
+    lib/sdl2/sdl-window-icon.hpp
+    lib/sdl2/sdl-constants.hpp
     )
 
-add_executable(${SPRINKLER_SDL_TARGET} ${SOURCE})
-target_link_libraries(sprinkler-sdl LINK_PUBLIC ${LIB})
+add_executable(${PROJECT_NAME} ${SOURCE})
 
-file(COPY assets
-    DESTINATION "${CMAKE_CURRENT_BINARY_DIR}"
-    FILES_MATCHING PATTERN *.ttf)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${LIB})
 
+target_include_directories(${PROJECT_NAME} PRIVATE "${m_ini_SOURCE_DIR}/src")
+target_include_directories(${PROJECT_NAME} PRIVATE lib)
