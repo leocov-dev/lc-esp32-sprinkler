@@ -7,37 +7,37 @@ sprinkler::gfx::Display::Display(int width, int height) : size_(Size{width, heig
   widget_context_stack_.push(Rect{Point{0, 0}, size_});
 }
 
-void sprinkler::gfx::Display::drawPixel(sprinkler::gfx::Point point, const sprinkler::gfx::Color &color) {
+void sprinkler::gfx::Display::DrawPixel(sprinkler::gfx::Point point, const sprinkler::gfx::Color &color) {
   const auto context = widget_context_stack_.top();
   point += context.origin;
-  drawPixel_(point, color);
+  DrawPixelInternal(point, color);
 }
 
-void sprinkler::gfx::Display::drawRect(sprinkler::gfx::Rect rect, sprinkler::gfx::Color color) {
+void sprinkler::gfx::Display::DrawRect(sprinkler::gfx::Rect rect, sprinkler::gfx::Color color) {
   const auto context = widget_context_stack_.top();
   rect.origin += context.origin;
-  drawRect_(rect, color);
+  DrawRectInternal(rect, color);
 }
 
-void sprinkler::gfx::Display::fillRect(sprinkler::gfx::Rect rect, sprinkler::gfx::Color color) {
+void sprinkler::gfx::Display::FillRect(sprinkler::gfx::Rect rect, sprinkler::gfx::Color color) {
   const auto context = widget_context_stack_.top();
   rect.origin += context.origin;
-  fillRect_(rect, color);
+  FillRectInternal(rect, color);
 }
 
-void sprinkler::gfx::Display::drawCircle(sprinkler::gfx::Point center, int radius, sprinkler::gfx::Color color) {
+void sprinkler::gfx::Display::DrawCircle(sprinkler::gfx::Point center, int radius, sprinkler::gfx::Color color) {
   const auto context = widget_context_stack_.top();
   center += context.origin;
-  drawCircle_(center, radius, color);
+  DrawCircleInternal(center, radius, color);
 }
 
-void sprinkler::gfx::Display::fillCircle(sprinkler::gfx::Point center, int radius, sprinkler::gfx::Color color) {
+void sprinkler::gfx::Display::FillCircle(sprinkler::gfx::Point center, int radius, sprinkler::gfx::Color color) {
   const auto context = widget_context_stack_.top();
   center += context.origin;
-  fillCircle_(center, radius, color);
+  FillCircleInternal(center, radius, color);
 }
 
-void sprinkler::gfx::Display::printText(sprinkler::gfx::Point &cursor,
+void sprinkler::gfx::Display::PrintText(sprinkler::gfx::Point &cursor,
                                         const std::string &text,
                                         sprinkler::gfx::Color fg) {
   if (gfxfont_ == nullptr) return;
@@ -47,70 +47,54 @@ void sprinkler::gfx::Display::printText(sprinkler::gfx::Point &cursor,
   display_space_cursor += context.origin;
 
   for (auto &c : text) {
-    drawChar_(display_space_cursor, c, fg);
+    DrawChar(display_space_cursor, c, fg);
   }
 }
 
-const sprinkler::gfx::Size &sprinkler::gfx::Display::getSize() const {
+const sprinkler::gfx::Size &sprinkler::gfx::Display::GetSize() const {
   return size_;
 }
 
-void sprinkler::gfx::Display::pushWidgetContext(const sprinkler::gfx::Rect &widget_rect) {
-  const Rect current = widget_context_stack_.top();
-  const Rect new_context = Rect{current.origin + widget_rect.origin, widget_rect.size};
-  widget_context_stack_.push(new_context);
+void sprinkler::gfx::Display::PushWidgetContext(const sprinkler::gfx::Rect &widget_rect) {
+  const Rect kCurrent = widget_context_stack_.top();
+  const Rect kNewContext = Rect{kCurrent.origin + widget_rect.origin, widget_rect.size};
+  widget_context_stack_.push(kNewContext);
 }
 
-void sprinkler::gfx::Display::popWidgetContext() {
+void sprinkler::gfx::Display::PopWidgetContext() {
   widget_context_stack_.pop();
 }
-void sprinkler::gfx::Display::setFont(const GFXfont &font) {
+void sprinkler::gfx::Display::SetFont(const GFXfont &font) {
   gfxfont_ = &font;
 }
-void sprinkler::gfx::Display::drawChar_(sprinkler::gfx::Point &cursor, unsigned char c, sprinkler::gfx::Color &color) {
+void sprinkler::gfx::Display::DrawChar(sprinkler::gfx::Point &cursor, unsigned char c, sprinkler::gfx::Color &color) {
   if (gfxfont_ == nullptr) return;
 
   // NOTE: Adafruit GFX Font compatible character drawing
   //  https://github.com/adafruit/Adafruit-GFX-Library
 
-  std::cout << "@ drawChar_ " << c;
+  GFXglyph *glyph = gfxfont_->glyph + (c - gfxfont_->first);
 
-  c -= gfxfont_->first;
+  uint16_t x, y, bitmap_offset = glyph->bitmapOffset;
+  uint8_t bits_chunk = 0, counter = 0;
 
-  GFXglyph *glyph = gfxfont_->glyph + c;
-  std::cout << " " << (uint16_t)c << std::endl;
-
-  uint16_t x, y, bo = glyph->bitmapOffset;
-  uint8_t bits = 0, bit = 0;
-
+  // this iterates along the x axis, loading 8 bit chunks from the bitmap
+  // until all pixel positions for the character are exhausted
   for (y = 0; y < glyph->height; y++) {
-//    bits = *(const unsigned char *)(&gfxfont_->bitmap[bo++]);
     for (x = 0; x < glyph->width; x++) {
-//      color = x == 0 ? gfx::Color::kDebugRed : gfx::Color::kDebugGreen;
-      std::cout << "coord: " << x << ", " << y << std::endl;
 
-      std::bitset<8> str_bit(bit);
-      std::cout << " counter: " << +(bit & 0x7)  << " " << str_bit << std::endl;
-
-      if (!(bit++ & 0x7)) {
-        bits = gfxfont_->bitmap[bo++];
-        std::bitset<8> str_bits(bits);
-        std::cout << " chunk: " << str_bits << std::endl;
-      }
-      if (bits & 0x80) {
-        std::cout << " draw: " << Point{glyph->xOffset + x, glyph->yOffset + y} << std::endl;
-//        auto location = cursor + Point{glyph->xOffset + x, glyph->yOffset + y};
-//        drawPixel(location, color);
-//      }
-//      if (color != gfx::Color::kDebugGreen || color != gfx::Color::kDebugRed) {
-        color = gfx::Color::kBlack;
-        auto location = cursor + Point{glyph->xOffset + x, glyph->yOffset + y};
-        drawPixel(location, color);
+      // count by 8 and load the next 8 bit chunk from the bitmap
+      if (!(counter++ & 0x7)) {
+        bits_chunk = gfxfont_->bitmap[bitmap_offset++];
       }
 
-      bits <<= 1;
-      std::bitset<8> str_bits(bits);
-      std::cout << " shift: " << str_bits << std::endl;
+      // if the first bit of the loaded chunk is a 1 we draw a pixel
+      if (bits_chunk & 0x80) {
+        DrawPixel(cursor + Point{glyph->xOffset + x, glyph->yOffset + y}, color);
+      }
+
+      // shift bits and loop
+      bits_chunk <<= 1;
     }
   }
 

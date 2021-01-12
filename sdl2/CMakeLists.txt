@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 project(sprinkler-sdl
     VERSION 0.0.0
@@ -37,7 +37,7 @@ set(LIB
     liblcsprinkler
     )
 
-set(SOURCE
+set(SRCS
     src/main.cpp
     lib/sdl2/sdl-display.cpp
     lib/sdl2/sdl-display.hpp
@@ -48,9 +48,11 @@ set(SOURCE
     lib/sdl2/sdl-utils.hpp
     lib/sdl2/sdl-window-icon.hpp
     lib/sdl2/sdl-constants.hpp
+    lib/sdl2/sdl-preferences.cpp
+    lib/sdl2/sdl-preferences.hpp
     )
 
-add_executable(${PROJECT_NAME} ${SOURCE})
+add_executable(${PROJECT_NAME} ${SRCS})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${LIB})
 

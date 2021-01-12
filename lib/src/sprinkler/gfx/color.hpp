@@ -1,29 +1,29 @@
-#ifndef LCESP32SPRINKLER_LIB_LCESP32SPRINKLER_SRC_GFX_COLOR_HPP_
-#define LCESP32SPRINKLER_LIB_LCESP32SPRINKLER_SRC_GFX_COLOR_HPP_
+#ifndef LC_ESP32_SPRINKLER_LIB_SRC_SPRINKLER_GFX_COLOR_HPP_
+#define LC_ESP32_SPRINKLER_LIB_SRC_SPRINKLER_GFX_COLOR_HPP_
 
 #include <iostream>
 
 namespace sprinkler::gfx {
 
 enum class Color {
-  kBlack,
-  kWhite,
-  kDebugRed,
-  kDebugGreen,
-  kDebugBlue
+  K_BLACK,
+  K_WHITE,
+  K_DEBUG_RED,
+  K_DEBUG_GREEN,
+  K_DEBUG_BLUE
 };
 
 inline std::ostream& operator<<(std::ostream& os, const Color& color) {
   switch (color) {
-    case Color::kBlack:
+    case Color::K_BLACK:
       return os << "Color::kBlack";
-    case Color::kWhite:
+    case Color::K_WHITE:
       return os << "Color::kWhite";
-    case Color::kDebugRed:
+    case Color::K_DEBUG_RED:
       return os << "Color::kDebugRed";
-    case Color::kDebugGreen:
+    case Color::K_DEBUG_GREEN:
       return os << "Color::kDebugGreen";
-    case Color::kDebugBlue:
+    case Color::K_DEBUG_BLUE:
       return os << "Color::kDebugBlue";
     default:
       return os << "Color::unknown";
@@ -32,4 +32,4 @@ inline std::ostream& operator<<(std::ostream& os, const Color& color) {
 
 }
 
-#endif //LCESP32SPRINKLER_LIB_LCESP32SPRINKLER_SRC_GFX_COLOR_HPP_
+#endif//LC_ESP32_SPRINKLER_LIB_SRC_SPRINKLER_GFX_COLOR_HPP_

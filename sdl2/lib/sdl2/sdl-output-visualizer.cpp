@@ -48,7 +48,7 @@ SDLOutputVisualizer::SDLOutputVisualizer(int x, int y) {
 };
 
 void SDLOutputVisualizer::Clear() {
-  SetRenderDrawColor(renderer_.get(), gfx::Color::kWhite);
+  SetRenderDrawColor(renderer_.get(), gfx::Color::K_WHITE);
   SDL_RenderClear(renderer_.get());
 }
 

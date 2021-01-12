@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 ############################ Fetch Deps #############################
@@ -18,7 +18,7 @@ endif ()
 
 set(LIB_LC_SPRINKLER_TARGET liblcsprinkler)
 
-set(SOURCE
+set(SRCS
     src/ada-font/gfxfont.h
 
     src/sprinkler/app/app.cpp
@@ -36,9 +36,9 @@ set(SOURCE
     src/sprinkler/input/input-event.hpp
     src/sprinkler/util/string-utils.cpp
     src/sprinkler/util/string-utils.hpp
-    )
+    src/sprinkler/constants.hpp)
 
-add_library(${LIB_LC_SPRINKLER_TARGET} ${SOURCE})
+add_library(${LIB_LC_SPRINKLER_TARGET} ${SRCS})
 target_include_directories(${LIB_LC_SPRINKLER_TARGET} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/src>
     $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>)

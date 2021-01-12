@@ -28,33 +28,33 @@ struct SDLSurfaceDeleter {
 inline
 const SDL_Color &FromColor(gfx::Color color) {
   switch (color) {
-    case gfx::Color::kBlack:
-      return kSDLBlack;
-    case gfx::Color::kWhite:
-      return kSDLWhite;
-    case gfx::Color::kDebugRed:
-      return kSDLDebugRed;
-    case gfx::Color::kDebugGreen:
-      return kSDLDebugGreen;
-    case gfx::Color::kDebugBlue:
-      return kSDLDebugBlue;
+    case gfx::Color::K_BLACK:
+      return kSdlBlack;
+    case gfx::Color::K_WHITE:
+      return kSdlWhite;
+    case gfx::Color::K_DEBUG_RED:
+      return kSdlDebugRed;
+    case gfx::Color::K_DEBUG_GREEN:
+      return kSdlDebugGreen;
+    case gfx::Color::K_DEBUG_BLUE:
+      return kSdlDebugBlue;
     default:
-      return kSDLBlack;
+      return kSdlBlack;
   }
 }
 
 inline
 Uint32 HexFromColor(gfx::Color color) {
   switch (color) {
-    case gfx::Color::kBlack:
+    case gfx::Color::K_BLACK:
       return 0xFF000000;
-    case gfx::Color::kWhite:
+    case gfx::Color::K_WHITE:
       return 0xFFFFFFFF;
-    case gfx::Color::kDebugRed:
+    case gfx::Color::K_DEBUG_RED:
       return 0xFFFF0000;
-    case gfx::Color::kDebugGreen:
+    case gfx::Color::K_DEBUG_GREEN:
       return 0xFF00FF00;
-    case gfx::Color::kDebugBlue:
+    case gfx::Color::K_DEBUG_BLUE:
       return 0xFF0000FF;
     default:
       return 0xFF000000;

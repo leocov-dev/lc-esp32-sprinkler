@@ -1,4 +1,3 @@
-#include "../components/esp-sprinkler/ssd-1306-display.hpp"
 #include "esp_system.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -8,20 +7,26 @@
 #include <iostream>
 #include <sdkconfig.h>
 #include <sprinkler/app/app.hpp>
+#include <sprinkler/constants.hpp>
 
 extern "C" {
 void app_main();
 }
 
+namespace {
+namespace app = sprinkler::app;
+namespace esp = sprinkler::esp;
+}
+
 
 void app_main() {
-  sprinkler::esp::SSD1306Display display(128, 64);
+  esp::SSD1306Display display(kDisplayWidth, kDisplayHeight);
 
-  sprinkler::app::App app(&display);
+  app::App app(&display);
   app.init();
 
   while (true) {
-    app.tick();
+    app.Tick();
     vTaskDelay(10 / portTICK_PERIOD_MS);
   }
 }

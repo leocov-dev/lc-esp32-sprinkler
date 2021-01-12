@@ -1,5 +1,5 @@
-#ifndef LCESP32SPRINKLER_LIB_LCESP32SPRINKLER_SRC_APP_APP_HPP_
-#define LCESP32SPRINKLER_LIB_LCESP32SPRINKLER_SRC_APP_APP_HPP_
+#ifndef LC_ESP32_SPRINKLER_LIB_SRC_SPRINKLER_APP_APP_HPP_
+#define LC_ESP32_SPRINKLER_LIB_SRC_SPRINKLER_APP_APP_HPP_
 
 #include "sprinkler/gfx/display.hpp"
 #include "sprinkler/input/input-event-handler.hpp"
@@ -15,14 +15,13 @@ namespace input = sprinkler::input;
 class App : public widget::Widget {
  public:
   explicit App(gfx::Display *display)
-      : widget::Widget(display->getSize()),
+      : widget::Widget(display->GetSize()),
         display_(display){};
-  using widget::Widget::handleInputEvent;
-  void init();
-  void tick();
+  using widget::Widget::HandleInputEvent;
+  void Tick();
 
  protected:
-  void draw(gfx::Display *display) const override;
+  void Draw(gfx::Display *display) const override;
 
  private:
   gfx::Display *display_;
@@ -39,4 +38,4 @@ class App : public widget::Widget {
 
 }// namespace sprinkler::app
 
-#endif//LCESP32SPRINKLER_LIB_LCESP32SPRINKLER_SRC_APP_APP_HPP_
+#endif//LC_ESP32_SPRINKLER_LIB_SRC_SPRINKLER_APP_APP_HPP_

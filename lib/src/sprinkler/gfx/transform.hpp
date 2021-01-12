@@ -1,16 +1,14 @@
-#ifndef LCESP32SPRINKLER_LIB_LCESP32SPRINKLER_SRC_GFX_TRANSFORM_HPP_
-#define LCESP32SPRINKLER_LIB_LCESP32SPRINKLER_SRC_GFX_TRANSFORM_HPP_
+#ifndef LC_ESP32_SPRINKLER_LIB_SRC_SPRINKLER_GFX_TRANSFORM_HPP_
+#define LC_ESP32_SPRINKLER_LIB_SRC_SPRINKLER_GFX_TRANSFORM_HPP_
 
 #include <iostream>
 
 namespace sprinkler::gfx {
 
-class Point {
- public:
-
+struct Point {
   Point(int x, int y) : x(x), y(y) {};
-  int x;
-  int y;
+
+  int x, y;
 
   Point &operator+=(const Point &rhs) {
     x += rhs.x;
@@ -29,8 +27,7 @@ Point operator+(const Point &lhs, const Point &rhs);
 Point operator-(const Point &lhs, const Point &rhs);
 
 struct Size {
-  int width;
-  int height;
+  int width, height;
 };
 
 struct Rect {
@@ -38,9 +35,9 @@ struct Rect {
   Point origin;
   Size size;
 
-  [[nodiscard]] Point upper_left() const { return origin; }
+  [[nodiscard]] Point UpperLeft() const { return origin; }
 
-  [[nodiscard]] Point lower_right() const {
+  [[nodiscard]] Point LowerRight() const {
     return {
         origin.y - size.height,
         origin.x + size.width
@@ -62,6 +59,6 @@ inline std::ostream& operator<<(std::ostream& os, const Rect& rect) {
             << " }";
 }
 
-} // namespace sprinker::gfx
+} // namespace sprinkler::gfx
 
-#endif //LCESP32SPRINKLER_LIB_LCESP32SPRINKLER_SRC_GFX_TRANSFORM_HPP_
+#endif//LC_ESP32_SPRINKLER_LIB_SRC_SPRINKLER_GFX_TRANSFORM_HPP_

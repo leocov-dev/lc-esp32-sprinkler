@@ -15,19 +15,19 @@ namespace gfx = sprinkler::gfx;
 
 class SDLDisplay : public gfx::Display {
  public:
-  SDLDisplay(int height, int width, int x, int y);
+  SDLDisplay(int height, int width, gfx::Point position);
   ~SDLDisplay() override = default;
 
-  void clear() override;
-  void refresh() override;
+  void Clear() override;
+  void Refresh() override;
   SDL_Window *getWindow();
 
  private:
-  void drawPixel_(const gfx::Point &point, const gfx::Color &color) const override;
-  void drawRect_(const gfx::Rect &rect, const gfx::Color &color) const override;
-  void fillRect_(const gfx::Rect &rect, const gfx::Color &color) const override;
-  void drawCircle_(const gfx::Point &center, int radius, const gfx::Color &color) const override;
-  void fillCircle_(const gfx::Point &center, int radius, const gfx::Color &color) const override;
+  void DrawPixelInternal(const gfx::Point &point, const gfx::Color &color) const override;
+  void DrawRectInternal(const gfx::Rect &rect, const gfx::Color &color) const override;
+  void FillRectInternal(const gfx::Rect &rect, const gfx::Color &color) const override;
+  void DrawCircleInternal(const gfx::Point &center, int radius, const gfx::Color &color) const override;
+  void FillCircleInternal(const gfx::Point &center, int radius, const gfx::Color &color) const override;
 
   std::unique_ptr<SDL_Renderer, SDLRendererDeleter> renderer_;
   std::unique_ptr<SDL_Window, SDLWindowDeleter> window_;

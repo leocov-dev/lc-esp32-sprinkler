@@ -1,1 +1,0 @@
-# lc-esp-idf-sprinkler

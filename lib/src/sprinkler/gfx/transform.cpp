@@ -1,9 +1,13 @@
 #include "transform.hpp"
 
-sprinkler::gfx::Point sprinkler::gfx::operator+(const sprinkler::gfx::Point &lhs, const sprinkler::gfx::Point &rhs) {
-  return sprinkler::gfx::Point{lhs.x + rhs.x, lhs.y + rhs.y};
+namespace {
+namespace gfx = sprinkler::gfx;
 }
 
-sprinkler::gfx::Point sprinkler::gfx::operator-(const sprinkler::gfx::Point &lhs, const sprinkler::gfx::Point &rhs) {
-  return sprinkler::gfx::Point{lhs.x - rhs.x, lhs.y - rhs.y};
+gfx::Point sprinkler::gfx::operator+(const gfx::Point &lhs, const gfx::Point &rhs) {
+  return gfx::Point{lhs.x + rhs.x, lhs.y + rhs.y};
+}
+
+gfx::Point sprinkler::gfx::operator-(const gfx::Point &lhs, const gfx::Point &rhs) {
+  return gfx::Point{lhs.x - rhs.x, lhs.y - rhs.y};
 }

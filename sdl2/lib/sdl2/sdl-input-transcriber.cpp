@@ -2,29 +2,28 @@
 #include "sdl-input-transcriber.hpp"
 
 sprinkler::input::InputEvent Transcribe(SDL_Event &event) {
-  const auto action = event.type == SDL_KEYDOWN ? sprinkler::input::InputAction::kDown : sprinkler::input::InputAction::kUp;
+  const auto action = event.type == SDL_KEYDOWN ? sprinkler::input::InputAction::K_DOWN : sprinkler::input::InputAction::K_UP;
 
   switch (event.key.keysym.sym) {
     case SDLK_RIGHT:
       return {
-          sprinkler::input::InputType::kNext,
+          sprinkler::input::InputType::K_NEXT,
           action
       };
     case SDLK_LEFT:
       return {
-          sprinkler::input::InputType::kPrev,
+          sprinkler::input::InputType::K_PREV,
           action
       };
     case SDLK_SPACE:
       return {
-          sprinkler::input::InputType::kSelect,
+          sprinkler::input::InputType::K_SELECT,
           action
       };
     default:
       return {
-          sprinkler::input::InputType::kUnknown,
-          sprinkler::input::InputAction::kUnknown
-      };
+          sprinkler::input::InputType::K_UNKNOWN,
+          sprinkler::input::InputAction::K_UNKNOWN};
   }
 }
 
@@ -41,7 +40,7 @@ void sprinkler::sdl::SDLInputTranscriber::dispatchEvents() {
         break;
       case SDL_KEYUP:
       case SDL_KEYDOWN:
-        handler_->handleInputEvent(Transcribe(event_));
+        handler_->HandleInputEvent(Transcribe(event_));
         break;
     }
   }
