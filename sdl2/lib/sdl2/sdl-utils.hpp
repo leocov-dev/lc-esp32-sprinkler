@@ -3,30 +3,33 @@
 
 #include <SDL.h>
 #include <SDL2_gfxPrimitives.h>
-#include "sdl-constants.hpp"
-#include "sprinkler/gfx/color.hpp"
-#include "sprinkler/gfx/transform.hpp"
 
-namespace gfx = sprinkler::gfx;
+#include <sprinkler/color.hpp>
+#include <sprinkler/transform.hpp>
+
+#include "sdl-constants.hpp"
+
+namespace {
+  namespace gfx = sprinkler::gfx;
+}
 
 struct SDLRendererDeleter {
-  void operator()(SDL_Renderer *renderer) { SDL_DestroyRenderer(renderer); }
+  void operator()(SDL_Renderer* renderer) { SDL_DestroyRenderer(renderer); }
 };
 
 struct SDLWindowDeleter {
-  void operator()(SDL_Window *window) { SDL_DestroyWindow(window); }
+  void operator()(SDL_Window* window) { SDL_DestroyWindow(window); }
 };
 
 struct SDLTextureDeleter {
-  void operator()(SDL_Texture *texture) { SDL_DestroyTexture(texture); }
+  void operator()(SDL_Texture* texture) { SDL_DestroyTexture(texture); }
 };
 
 struct SDLSurfaceDeleter {
-  void operator()(SDL_Surface *surface) { SDL_FreeSurface(surface); }
+  void operator()(SDL_Surface* surface) { SDL_FreeSurface(surface); }
 };
 
-inline
-const SDL_Color &FromColor(gfx::Color color) {
+inline const SDL_Color& FromColor(gfx::Color color) {
   switch (color) {
     case gfx::Color::K_BLACK:
       return kSdlBlack;
@@ -43,8 +46,7 @@ const SDL_Color &FromColor(gfx::Color color) {
   }
 }
 
-inline
-Uint32 HexFromColor(gfx::Color color) {
+inline Uint32 HexFromColor(gfx::Color color) {
   switch (color) {
     case gfx::Color::K_BLACK:
       return 0xFF000000;
@@ -61,15 +63,12 @@ Uint32 HexFromColor(gfx::Color color) {
   }
 }
 
-inline
-void SetRenderDrawColor(SDL_Renderer *renderer, gfx::Color color) {
-  const SDL_Color &sdl_color = FromColor(color);
-  SDL_SetRenderDrawColor(renderer, sdl_color.r, sdl_color.g, sdl_color.b,
-                         sdl_color.a);
+inline void SetRenderDrawColor(SDL_Renderer* renderer, gfx::Color color) {
+  const SDL_Color& sdl_color = FromColor(color);
+  SDL_SetRenderDrawColor(renderer, sdl_color.r, sdl_color.g, sdl_color.b, sdl_color.a);
 }
 
-inline
-SDL_Rect FromRect(const gfx::Rect &rect) {
+inline SDL_Rect FromRect(const gfx::Rect& rect) {
   SDL_Rect sdl_rect;
   sdl_rect.x = rect.origin.x;
   sdl_rect.y = rect.origin.y;
@@ -78,4 +77,4 @@ SDL_Rect FromRect(const gfx::Rect &rect) {
   return sdl_rect;
 }
 
-#endif //LC_ESP32_SPRINKLER_SDL2_LIB_SDL2_SDL_UTILS_HPP_
+#endif  // LC_ESP32_SPRINKLER_SDL2_LIB_SDL2_SDL_UTILS_HPP_

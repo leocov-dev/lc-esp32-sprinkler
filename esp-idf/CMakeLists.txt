@@ -1,6 +1,4 @@
 cmake_minimum_required(VERSION 3.5)
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 20)
 
 message("\n##################  ESP32 BUILD  ##################\n")
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)

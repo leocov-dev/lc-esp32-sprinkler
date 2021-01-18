@@ -1,14 +1,16 @@
-#include "SDL.h"
+#include <SDL.h>
+
+#include <sprinkler/app.hpp>
+#include <sprinkler/constants.hpp>
+
 #include "sdl2/sdl-display.hpp"
 #include "sdl2/sdl-input-transcriber.hpp"
 #include "sdl2/sdl-preferences.hpp"
-#include <sprinkler/app/app.hpp>
-#include <sprinkler/constants.hpp>
 
 namespace {
-namespace app = sprinkler::app;
-namespace sdl = sprinkler::sdl;
-} // namespace
+  namespace app = sprinkler::app;
+  namespace sdl = sprinkler::sdl;
+}  // namespace
 
 int main() {
   SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
@@ -24,7 +26,7 @@ int main() {
   while (!input_transcriber.shouldQuit()) {
     input_transcriber.dispatchEvents();
     app.Tick();
-    SDL_Delay(10);// required to prevent stalling draw thread
+    SDL_Delay(10);  // required to prevent stalling draw thread
   }
 
   SDL_Log("Closing...");

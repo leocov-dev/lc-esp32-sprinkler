@@ -1,13 +1,15 @@
-#include <filesystem>
-#include "mini/ini.h"
 #include "sdl-preferences.hpp"
-#include "SDL.h"
-#include "sprinkler/util/string-utils.hpp"
+
+#include <SDL.h>
+#include <mini/ini.h>
+
+#include <filesystem>
+#include <sprinkler/string-utils.hpp>
 
 namespace {
-namespace fs = std::filesystem;
-namespace gfx = sprinkler::gfx;
-} // namespace
+  namespace fs = std::filesystem;
+  namespace gfx = sprinkler::gfx;
+}  // namespace
 
 preferences::SDLPreferences::SDLPreferences()
     : pref_root_(SDL_GetPrefPath("lc-esp32-sprinkler", "app")) {
@@ -35,7 +37,7 @@ preferences::SDLPreferences::~SDLPreferences() {
   SDL_free(pref_root_);
 }
 
-void preferences::SDLPreferences::SaveWindowPosition(SDL_Window *window) {
+void preferences::SDLPreferences::SaveWindowPosition(SDL_Window* window) {
   int x, y, top_border;
 
   std::stringstream ss;
