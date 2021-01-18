@@ -1,6 +1,6 @@
 # lc-esp32-sprinkler
 
-## WIP
+## :wrench: WIP :hammer:
 This is currently still a work in progress, the SDL build should produce some 
 output but the esp-idf build will likely not work until I have completed the 
 abstracted app and it is fully working in the SDL desktop environment.
