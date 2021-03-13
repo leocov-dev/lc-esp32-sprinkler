@@ -2,19 +2,19 @@
 
 #include <SDL.h>
 
-sprinkler::input::InputEvent Transcribe(SDL_Event& event) {
-  const auto action = event.type == SDL_KEYDOWN ? sprinkler::input::InputAction::K_DOWN
-                                                : sprinkler::input::InputAction::K_UP;
+lc::input::InputEvent Transcribe(SDL_Event& event) {
+  const auto action = event.type == SDL_KEYDOWN ? lc::input::InputAction::K_DOWN
+                                                : lc::input::InputAction::K_UP;
 
   switch (event.key.keysym.sym) {
     case SDLK_RIGHT:
-      return {sprinkler::input::InputType::K_NEXT, action};
+      return {lc::input::InputType::K_NEXT, action};
     case SDLK_LEFT:
-      return {sprinkler::input::InputType::K_PREV, action};
+      return {lc::input::InputType::K_PREV, action};
     case SDLK_SPACE:
-      return {sprinkler::input::InputType::K_SELECT, action};
+      return {lc::input::InputType::K_SELECT, action};
     default:
-      return {sprinkler::input::InputType::K_UNKNOWN, sprinkler::input::InputAction::K_UNKNOWN};
+      return {lc::input::InputType::K_UNKNOWN, lc::input::InputAction::K_UNKNOWN};
   }
 }
 

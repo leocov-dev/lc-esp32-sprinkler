@@ -2,20 +2,124 @@ cmake_minimum_required(VERSION 3.16)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(LIB_TARGET liblcsprinkler)
+project(
+    lcSprinkler
+    VERSION 1.0.0
+    DESCRIPTION "sprinkler controller app for micro-controllers"
+)
+
+set(DEFAULT_BUILD_TYPE "Release")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "Setting build type to '${DEFAULT_BUILD_TYPE}' as none was specified.")
+    set(CMAKE_BUILD_TYPE "${DEFAULT_BUILD_TYPE}" CACHE STRING "Choose the type of build." FORCE)
+    # Set the possible values of build type for cmake-gui
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+set(LC_SPRINKLER_TARGET_NAME                ${PROJECT_NAME})
+set(LC_SPRINKLER_CONFIG_INSTALL_DIR         "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}" CACHE INTERNAL "")
+set(LC_SPRINKLER_INCLUDE_INSTALL_DIR        "${CMAKE_INSTALL_INCLUDEDIR}")
+set(LC_SPRINKLER_INCLUDE_BUILD_DIR          "${PROJECT_SOURCE_DIR}/include/")
+set(LC_SPRINKLER_TARGETS_EXPORT_NAME        "${PROJECT_NAME}Targets")
+set(LC_SPRINKLER_CMAKE_CONFIG_TEMPLATE      "cmake/config.cmake.in")
+set(LC_SPRINKLER_CMAKE_CONFIG_DIR           "${CMAKE_CURRENT_BINARY_DIR}")
+set(LC_SPRINKLER_CMAKE_VERSION_CONFIG_FILE  "${LC_SPRINKLER_CMAKE_CONFIG_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
+set(LC_SPRINKLER_CMAKE_PROJECT_CONFIG_FILE  "${LC_SPRINKLER_CMAKE_CONFIG_DIR}/${PROJECT_NAME}Config.cmake")
+set(LC_SPRINKLER_CMAKE_PROJECT_TARGETS_FILE "${LC_SPRINKLER_CMAKE_CONFIG_DIR}/${PROJECT_NAME}Targets.cmake")
+set(LC_SPRINKLER_PKGCONFIG_INSTALL_DIR      "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 set(SRCS
-    src/sprinkler/app.cpp
-    src/sprinkler/display.cpp
-    src/sprinkler/transform.cpp
-    src/sprinkler/widget.cpp
-    src/sprinkler/w-frame.cpp
-    src/sprinkler/string-utils.cpp)
+    src/sprinkler/app.cpp)
 
-add_library(${LIB_TARGET} ${SRCS})
+add_library(
+    ${LC_SPRINKLER_TARGET_NAME}
+    SHARED ${SRCS}
+)
+add_library(
+    ${PROJECT_NAME}::${LC_SPRINKLER_TARGET_NAME}
+    ALIAS ${LC_SPRINKLER_TARGET_NAME}
+)
 
-target_include_directories(${LIB_TARGET} PUBLIC ./include)
-target_include_directories(${LIB_TARGET} PRIVATE ./src)
+set_target_properties(
+    ${LC_SPRINKLER_TARGET_NAME} PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION 1
+)
 
-target_include_directories(${LIB_TARGET} PUBLIC ../thirdparty/adafruit_gfx)
-target_include_directories(${LIB_TARGET} PUBLIC ../thirdparty/nlohmann_json)
+find_package(
+    lcWidgets REQUIRED
+    HINTS "${CMAKE_CURRENT_LIST_DIR}/../build/lib-lc-widgets"
+)
+
+add_dependencies(
+    ${LC_SPRINKLER_TARGET_NAME}
+    lcWidgets::lcWidgets
+)
+
+target_link_libraries(
+    ${LC_SPRINKLER_TARGET_NAME}
+    lcWidgets::lcWidgets
+)
+
+target_include_directories(
+    ${LC_SPRINKLER_TARGET_NAME}
+    PUBLIC
+    $<BUILD_INTERFACE:${LC_SPRINKLER_INCLUDE_BUILD_DIR}>
+    $<INSTALL_INTERFACE:include>
+    PRIVATE
+    src
+)
+
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/pkg-config.pc.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
+)
+
+configure_file(
+    "cmake/lcSprinklerConfigVersion.cmake.in"
+    ${LC_SPRINKLER_CMAKE_VERSION_CONFIG_FILE}
+    @ONLY
+)
+configure_file(
+    ${LC_SPRINKLER_CMAKE_CONFIG_TEMPLATE}
+    ${LC_SPRINKLER_CMAKE_PROJECT_CONFIG_FILE}
+    @ONLY
+)
+
+install(
+    DIRECTORY ${LC_SPRINKLER_INCLUDE_BUILD_DIR}
+    DESTINATION ${LC_SPRINKLER_INCLUDE_INSTALL_DIR}
+)
+
+install(
+    FILES ${LC_SPRINKLER_CMAKE_PROJECT_CONFIG_FILE} ${LC_SPRINKLER_CMAKE_VERSION_CONFIG_FILE}
+    DESTINATION ${LC_SPRINKLER_CONFIG_INSTALL_DIR}
+)
+
+export(
+    TARGETS ${LC_SPRINKLER_TARGET_NAME}
+    NAMESPACE ${PROJECT_NAME}::
+    FILE ${LC_SPRINKLER_CMAKE_PROJECT_TARGETS_FILE}
+)
+
+install(
+    TARGETS ${LC_SPRINKLER_TARGET_NAME}
+    EXPORT  ${LC_SPRINKLER_TARGETS_EXPORT_NAME}
+    INCLUDES DESTINATION ${LC_SPRINKLER_INCLUDE_INSTALL_DIR}
+    ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME  DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(
+    EXPORT ${LC_SPRINKLER_TARGETS_EXPORT_NAME}
+    NAMESPACE ${PROJECT_NAME}::
+    DESTINATION ${LC_SPRINKLER_CONFIG_INSTALL_DIR}
+)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
+    DESTINATION ${LC_SPRINKLER_PKGCONFIG_INSTALL_DIR}
+)

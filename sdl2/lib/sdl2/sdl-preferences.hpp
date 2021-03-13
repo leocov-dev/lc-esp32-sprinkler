@@ -4,10 +4,10 @@
 #include <SDL.h>
 #include <mini/ini.h>
 
-#include "sprinkler/transform.hpp"
+#include "widgets/transform.hpp"
 
 namespace {
-  namespace gfx = sprinkler::gfx;
+  namespace gfx = lc::gfx;
 }
 
 namespace preferences {

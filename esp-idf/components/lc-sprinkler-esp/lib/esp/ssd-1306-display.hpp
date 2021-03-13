@@ -1,7 +1,7 @@
 #ifndef LC_ESP32_SPRINKLER_ESP_IDF_COMPONENTS_SPRINKLER_ESP_SSD_1306_DISPLAY_HPP_
 #define LC_ESP32_SPRINKLER_ESP_IDF_COMPONENTS_SPRINKLER_ESP_SSD_1306_DISPLAY_HPP_
 
-#include <sprinkler/display.hpp>
+#include "widgets/display.hpp"
 
 namespace sprinkler::esp {
 

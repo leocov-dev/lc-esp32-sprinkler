@@ -5,14 +5,14 @@
 
 #include <memory>
 
+#include "widgets/color.hpp"
+#include "widgets/display.hpp"
+#include "widgets/transform.hpp"
 #include "sdl-constants.hpp"
 #include "sdl-utils.hpp"
-#include "sprinkler/color.hpp"
-#include "sprinkler/display.hpp"
-#include "sprinkler/transform.hpp"
 
 namespace {
-  namespace gfx = sprinkler::gfx;
+  namespace gfx = lc::gfx;
 }
 
 namespace sprinkler::sdl {

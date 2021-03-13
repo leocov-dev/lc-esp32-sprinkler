@@ -3,15 +3,15 @@
 
 #include <memory>
 
-#include "sprinkler/display.hpp"
-#include "sprinkler/input-event-handler.hpp"
-#include "sprinkler/w-frame.hpp"
+#include "widgets/widget.hpp"
+#include "widgets/w-frame.hpp"
+#include "widgets/display.hpp"
 
 namespace sprinkler::app {
 
-  namespace gfx = sprinkler::gfx;
-  namespace widget = sprinkler::widget;
-  namespace input = sprinkler::input;
+  namespace gfx = lc::gfx;
+  namespace widget = lc::widget;
+  namespace input = lc::input;
 
   class App : public widget::Widget {
   public:

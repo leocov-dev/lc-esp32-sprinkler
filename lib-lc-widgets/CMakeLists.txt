@@ -1,0 +1,122 @@
+cmake_minimum_required(VERSION 3.16)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+project(
+    lcWidgets
+    VERSION 1.0.0
+    DESCRIPTION "ui widgets for micro-controllers"
+)
+
+set(DEFAULT_BUILD_TYPE "Release")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "Setting build type to '${DEFAULT_BUILD_TYPE}' as none was specified.")
+    set(CMAKE_BUILD_TYPE "${DEFAULT_BUILD_TYPE}" CACHE STRING "Choose the type of build." FORCE)
+    # Set the possible values of build type for cmake-gui
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+set(LC_WIDGETS_TARGET_NAME                ${PROJECT_NAME})
+set(LC_WIDGETS_CONFIG_INSTALL_DIR         "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}" CACHE INTERNAL "")
+set(LC_WIDGETS_INCLUDE_INSTALL_DIR        "${CMAKE_INSTALL_INCLUDEDIR}")
+set(LC_WIDGETS_INCLUDE_BUILD_DIR          "${PROJECT_SOURCE_DIR}/include/")
+set(LC_WIDGETS_TARGETS_EXPORT_NAME        "${PROJECT_NAME}Targets")
+set(LC_WIDGETS_CMAKE_CONFIG_TEMPLATE      "cmake/config.cmake.in")
+set(LC_WIDGETS_CMAKE_CONFIG_DIR           "${CMAKE_CURRENT_BINARY_DIR}")
+set(LC_WIDGETS_CMAKE_VERSION_CONFIG_FILE  "${LC_WIDGETS_CMAKE_CONFIG_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
+set(LC_WIDGETS_CMAKE_PROJECT_CONFIG_FILE  "${LC_WIDGETS_CMAKE_CONFIG_DIR}/${PROJECT_NAME}Config.cmake")
+set(LC_WIDGETS_CMAKE_PROJECT_TARGETS_FILE "${LC_WIDGETS_CMAKE_CONFIG_DIR}/${PROJECT_NAME}Targets.cmake")
+set(LC_WIDGETS_PKGCONFIG_INSTALL_DIR      "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
+set(SRCS
+    src/widgets/app.cpp
+    src/widgets/display.cpp
+    src/widgets/string-utils.cpp
+    src/widgets/transform.cpp
+    src/widgets/w-frame.cpp
+    src/widgets/widget.cpp)
+
+add_library(
+    ${LC_WIDGETS_TARGET_NAME}
+    SHARED ${SRCS}
+)
+add_library(
+    ${PROJECT_NAME}::${LC_WIDGETS_TARGET_NAME}
+    ALIAS ${LC_WIDGETS_TARGET_NAME}
+)
+
+set_target_properties(
+    ${LC_WIDGETS_TARGET_NAME} PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION 1
+)
+
+target_include_directories(
+    ${LC_WIDGETS_TARGET_NAME}
+    PUBLIC
+    $<BUILD_INTERFACE:${LC_WIDGETS_INCLUDE_BUILD_DIR}>
+    $<INSTALL_INTERFACE:include>
+    PRIVATE
+    src
+)
+
+target_include_directories(
+    ${LC_WIDGETS_TARGET_NAME}
+    PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/thirdparty>
+    $<INSTALL_INTERFACE:include>
+)
+
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/pkg-config.pc.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
+)
+
+configure_file(
+    "cmake/lcWidgetsConfigVersion.cmake.in"
+    ${LC_WIDGETS_CMAKE_VERSION_CONFIG_FILE}
+    @ONLY
+)
+configure_file(
+    ${LC_WIDGETS_CMAKE_CONFIG_TEMPLATE}
+    ${LC_WIDGETS_CMAKE_PROJECT_CONFIG_FILE}
+    @ONLY
+)
+
+install(
+    DIRECTORY ${LC_WIDGETS_INCLUDE_BUILD_DIR}
+    DESTINATION ${LC_WIDGETS_INCLUDE_INSTALL_DIR}
+)
+
+install(
+    FILES ${LC_WIDGETS_CMAKE_PROJECT_CONFIG_FILE} ${LC_WIDGETS_CMAKE_VERSION_CONFIG_FILE}
+    DESTINATION ${LC_WIDGETS_CONFIG_INSTALL_DIR}
+)
+
+export(
+    TARGETS ${LC_WIDGETS_TARGET_NAME}
+    NAMESPACE ${PROJECT_NAME}::
+    FILE ${LC_WIDGETS_CMAKE_PROJECT_TARGETS_FILE}
+)
+
+install(
+    TARGETS ${LC_WIDGETS_TARGET_NAME}
+    EXPORT  ${LC_WIDGETS_TARGETS_EXPORT_NAME}
+    INCLUDES DESTINATION ${LC_WIDGETS_INCLUDE_INSTALL_DIR}
+    ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME  DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(
+    EXPORT ${LC_WIDGETS_TARGETS_EXPORT_NAME}
+    NAMESPACE ${PROJECT_NAME}::
+    DESTINATION ${LC_WIDGETS_CONFIG_INSTALL_DIR}
+)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
+    DESTINATION ${LC_WIDGETS_PKGCONFIG_INSTALL_DIR}
+)

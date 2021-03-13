@@ -1,12 +1,10 @@
 #include "sprinkler/app.hpp"
 
-#include "sprinkler/color.hpp"
-#include "sprinkler/display.hpp"
-#include "sprinkler/fonts/FreeMono9pt7b.h"
+#include "fonts/FreeMono9pt7b.h"
 
 namespace {
 namespace app = sprinkler::app;
-namespace gfx = sprinkler::gfx;
+namespace gfx = lc::gfx;
 }
 
 //void sprinkler::app::App::init() {
@@ -25,7 +23,7 @@ void app::App::Tick() {
   Render(display_);
 
   {
-    sprinkler::gfx::Point cursor{1, 15};
+    lc::gfx::Point cursor{1, 15};
     display_->SetFont(FreeMono9pt7b);
     display_->PrintText(cursor, "Hello World", gfx::Color::K_BLACK);
   }

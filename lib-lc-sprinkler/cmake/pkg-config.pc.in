@@ -1,0 +1,4 @@
+Name: ${PROJECT_NAME}
+Description: Sprinkler system library for embedded devices
+Version: ${PROJECT_VERSION}
+Cflags: -I${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}

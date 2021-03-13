@@ -34,22 +34,15 @@ set(LIB
     SDL2::Main
     SDL2::TTF
     SDL2::GFX
-    liblcsprinkler
+    lcSprinkler::lcSprinkler
     )
 
 set(SRCS
     src/main.cpp
     lib/sdl2/sdl-display.cpp
-    lib/sdl2/sdl-display.hpp
     lib/sdl2/sdl-input-transcriber.cpp
-    lib/sdl2/sdl-input-transcriber.hpp
     lib/sdl2/sdl-output-visualizer.cpp
-    lib/sdl2/sdl-output-visualizer.hpp
-    lib/sdl2/sdl-utils.hpp
-    lib/sdl2/sdl-window-icon.hpp
-    lib/sdl2/sdl-constants.hpp
     lib/sdl2/sdl-preferences.cpp
-    lib/sdl2/sdl-preferences.hpp
     )
 
 add_executable(${PROJECT_NAME} ${SRCS})

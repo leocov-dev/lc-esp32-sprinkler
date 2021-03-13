@@ -3,10 +3,10 @@
 
 #include <SDL.h>
 
-#include "sprinkler/input-event-handler.hpp"
+#include "widgets/input-event-handler.hpp"
 
 namespace {
-  namespace input = sprinkler::input;
+  namespace input = lc::input;
 }
 
 namespace sprinkler::sdl {

@@ -4,11 +4,12 @@
 #include <mini/ini.h>
 
 #include <filesystem>
-#include <sprinkler/string-utils.hpp>
+
+#include "widgets/string-utils.hpp"
 
 namespace {
   namespace fs = std::filesystem;
-  namespace gfx = sprinkler::gfx;
+  namespace gfx = lc::gfx;
 }  // namespace
 
 preferences::SDLPreferences::SDLPreferences()

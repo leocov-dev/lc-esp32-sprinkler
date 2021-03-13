@@ -1,4 +1,4 @@
-# lib-lc-sprinkler
+# lib-lc-csprinkler
 
 This is the abstracted application layer for the sprinkler controller
 

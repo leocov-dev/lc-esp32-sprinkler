@@ -4,13 +4,12 @@
 #include <SDL.h>
 #include <SDL2_gfxPrimitives.h>
 
-#include <sprinkler/color.hpp>
-#include <sprinkler/transform.hpp>
-
+#include "widgets/color.hpp"
+#include "widgets/transform.hpp"
 #include "sdl-constants.hpp"
 
 namespace {
-  namespace gfx = sprinkler::gfx;
+  namespace gfx = lc::gfx;
 }
 
 struct SDLRendererDeleter {
