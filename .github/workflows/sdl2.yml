@@ -1,50 +1,23 @@
 name: SDL2
 
-on:
-  push:
-  pull_request:
+on: [push, pull_request]
 
 jobs:
-  build-and-test:
-
-    name: ${{ matrix.toolchain }}
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        toolchain:
-          - linux-gcc
-#          - macos-clang
-#          - windows-msvc
-
-        configuration:
-          - Debug
-
-        include:
-          - toolchain: linux-gcc
-            os: ubuntu-latest
-            compiler: gcc
-
-#          - toolchain: macos-clang
-#            os: macos-latest
-#            compiler: clang
-#
-#          - toolchain: windows-msvc
-#            os: windows-latest
-#            compiler: msvc
+  build-and-test-UBUNTU:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Configure (${{ matrix.configuration }})
-        run: cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.configuration }}
+      - name: install_dependencies
+        run: |
+          sudo add-apt-repository -y "deb http://archive.ubuntu.com/ubuntu `lsb_release -sc` main universe restricted multiverse"
+          sudo apt-get update -y -qq
+          sudo apt-get install libsdl2-dev
 
-      - name: Build with ${{ matrix.compiler }}
+      - name: Configure Debug
+        run: cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=Debug
+
+      - name: Build
         run: cmake --build build
-
-#      - name: Test
-#        working-directory: build
-#        env:
-#          CTEST_OUTPUT_ON_FAILURE: 1
-#        run: ctest -C ${{ matrix.configuration }}
