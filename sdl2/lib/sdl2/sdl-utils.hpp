@@ -35,11 +35,11 @@ inline const SDL_Color& FromColor(gfx::Color color) {
     case gfx::Color::K_WHITE:
       return kSdlWhite;
     case gfx::Color::K_DEBUG_RED:
-      return kSdlDebugRed;
+      return kDebug ? kSdlDebugRed : kSdlBlack;
     case gfx::Color::K_DEBUG_GREEN:
-      return kSdlDebugGreen;
+      return kDebug ? kSdlDebugGreen : kSdlBlack;
     case gfx::Color::K_DEBUG_BLUE:
-      return kSdlDebugBlue;
+      return kDebug ? kSdlDebugBlue : kSdlBlack;
     default:
       return kSdlBlack;
   }

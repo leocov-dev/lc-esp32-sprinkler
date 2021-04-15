@@ -3,7 +3,13 @@
 
 #include <SDL.h>
 
-constexpr int kDisplayScaleFactor = 2;
+#ifdef DEBUG
+constexpr int kDebug = true;
+#else
+constexpr int kDebug = false;
+#endif
+
+constexpr int kDisplayScaleFactor = 1;
 
 constexpr SDL_Color kSdlBlack{0x00, 0x00, 0x00, 0xff};
 

@@ -32,7 +32,9 @@ set(LC_SPRINKLER_CMAKE_PROJECT_TARGETS_FILE "${LC_SPRINKLER_CMAKE_CONFIG_DIR}/${
 set(LC_SPRINKLER_PKGCONFIG_INSTALL_DIR      "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 set(SRCS
-    src/sprinkler/app.cpp)
+    src/sprinkler/app.cpp
+    src/components/info-bar.cpp
+    )
 
 add_library(
     ${LC_SPRINKLER_TARGET_NAME}
@@ -83,6 +85,7 @@ configure_file(
     ${LC_SPRINKLER_CMAKE_VERSION_CONFIG_FILE}
     @ONLY
 )
+
 configure_file(
     ${LC_SPRINKLER_CMAKE_CONFIG_TEMPLATE}
     ${LC_SPRINKLER_CMAKE_PROJECT_CONFIG_FILE}

@@ -24,7 +24,7 @@ namespace sprinkler::sdl {
 
     void Clear() override;
     void Refresh() override;
-    SDL_Window* getWindow();
+    SDL_Window* GetWindow();
 
   private:
     void DrawPixelInternal(const gfx::Point& point, const gfx::Color& color) const override;

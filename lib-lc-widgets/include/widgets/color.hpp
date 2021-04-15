@@ -13,6 +13,7 @@ enum class Color {
   K_DEBUG_BLUE
 };
 
+// serialize color to text for console
 inline std::ostream& operator<<(std::ostream& os, const Color& color) {
   switch (color) {
     case Color::K_BLACK:

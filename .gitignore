@@ -1,3 +1,4 @@
-build/
+build*/
 cmake-build*/
 .idea/
+/lib-lc-sprinkler/img/IoT_16x16_icon_set_oled_2_color/

@@ -46,7 +46,9 @@ void sprinkler::sdl::SDLDisplay::Clear() {
 
 void sprinkler::sdl::SDLDisplay::Refresh() {
   SDL_SetRenderDrawColor(renderer_.get(), 200, 200, 200, 128);
-  SDL_RenderDrawLine(renderer_.get(), 0, 16, 128, 16);
+  if (kDebug) {
+    SDL_RenderDrawLine(renderer_.get(), 0, 16, 128, 16);
+  }
   SDL_RenderPresent(renderer_.get());
 }
 
@@ -82,6 +84,6 @@ void sprinkler::sdl::SDLDisplay::FillCircleInternal(const gfx::Point& center,
   filledCircleColor(renderer_.get(), center.x, center.y, radius, HexFromColor(color));
 }
 
-SDL_Window* sprinkler::sdl::SDLDisplay::getWindow() {
+SDL_Window* sprinkler::sdl::SDLDisplay::GetWindow() {
   return window_.get();
 }

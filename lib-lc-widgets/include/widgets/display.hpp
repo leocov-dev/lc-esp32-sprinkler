@@ -8,6 +8,7 @@ Inspired by deskmate by Raphael Baron https://github.com/rbaron/deskmate
 #include "adafruit-gfx/gfxfont.h"
 #include "color.hpp"
 #include "transform.hpp"
+#include "icons/icon.hpp"
 #include <stack>
 #include <string>
 
@@ -47,6 +48,7 @@ class Display {
   void DrawCircle(Point center, int radius, Color color);
   void FillCircle(Point center, int radius, Color color);
   void PrintText(Point &cursor, const std::string &text, Color fg);
+  void DrawIcon(Point origin, const Icon &icon);
 
   // Derived classes must implement PutTextAbsolute and DrawPixelAbsolute, which
   // handle absolute coordinates. This base class exposes public PutText and

@@ -6,6 +6,8 @@ project(
     DESCRIPTION "esp32 firmware for sprinkler system controller"
 )
 
+add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>")
+
 add_subdirectory(lib-lc-widgets)
 add_subdirectory(lib-lc-sprinkler)
 add_subdirectory(sdl2)

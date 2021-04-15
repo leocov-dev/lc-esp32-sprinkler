@@ -8,7 +8,6 @@
 #include "sdl2/sdl-preferences.hpp"
 
 namespace {
-  namespace app = sprinkler::app;
   namespace sdl = sprinkler::sdl;
 }  // namespace
 
@@ -20,7 +19,7 @@ int main() {
   auto restore_position = prefs.GetWindowPosition();
 
   sdl::SDLDisplay display(kDisplayHeight, kDisplayWidth, restore_position);
-  app::App app(&display);
+  sprinkler::App app(&display);
   sdl::SDLInputTranscriber input_transcriber(&app);
 
   while (!input_transcriber.shouldQuit()) {
@@ -30,6 +29,6 @@ int main() {
   }
 
   SDL_Log("Closing...");
-  prefs.SaveWindowPosition(display.getWindow());
+  prefs.SaveWindowPosition(display.GetWindow());
   SDL_Quit();
 }
