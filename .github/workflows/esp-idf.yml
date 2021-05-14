@@ -1,50 +1,20 @@
-name: ESP-IDF
+name: esp-idf
 
-on:
-  push:
-  pull_request:
+on: pull_request
 
 jobs:
-  build-and-test:
+  build:
+    runs-on: ubuntu-latest
 
-    name: ${{ matrix.toolchain }}
-    runs-on: ${{ matrix.os }}
-#
-#    strategy:
-#      matrix:
-#        toolchain:
-#          - linux-gcc
-#          - macos-clang
-#          - windows-msvc
+    steps:
+      - uses: actions/checkout@v2
 
-#        configuration:
-#          - Debug
-#
-#        include:
-#          - toolchain: linux-gcc
-#            os: ubuntu-latest
-#            compiler: gcc
+      - name: Install Dependencies
+        run: |
+          echo "@@@"
 
-#          - toolchain: macos-clang
-#            os: macos-latest
-#            compiler: clang
-#
-#          - toolchain: windows-msvc
-#            os: windows-latest
-#            compiler: msvc
+      - name: Configure
+        run: cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=Release
 
-#    steps:
-#      - name: Checkout Code
-#        uses: actions/checkout@v2
-#
-#      - name: Configure (${{ matrix.configuration }})
-#        run: cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=${{ matrix.configuration }}
-#
-#      - name: Build with ${{ matrix.compiler }}
-#        run: cmake --build build
-
-#      - name: Test
-#        working-directory: build
-#        env:
-#          CTEST_OUTPUT_ON_FAILURE: 1
-#        run: ctest -C ${{ matrix.configuration }}
+      - name: Build
+        run: echo "%%%"
