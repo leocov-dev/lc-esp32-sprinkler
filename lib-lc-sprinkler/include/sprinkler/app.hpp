@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "components/info-bar.hpp"
-#include "constants.hpp"
 #include "widgets/display.hpp"
 #include "widgets/w-frame.hpp"
 #include "widgets/widget.hpp"
@@ -30,8 +29,8 @@ namespace sprinkler {
   private:
     gfx::Display* display_;
 
-    std::unique_ptr<sprinkler::CInfoBar> info_bar_
-        = std::make_unique<sprinkler::CInfoBar>(gfx::Size{kDisplayWidth, kDisplayQuartered});
+    std::unique_ptr<sprinkler::CInfoBar> info_bar_ = std::make_unique<sprinkler::CInfoBar>(
+        gfx::Size{display_->GetSize().width, display_->GetSize().height / 4});
   };
 
 }  // namespace sprinkler

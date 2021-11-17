@@ -9,7 +9,7 @@ constexpr int kDebug = true;
 constexpr int kDebug = false;
 #endif
 
-constexpr int kDisplayScaleFactor = 1;
+constexpr int kDisplayScaleFactor = 2;
 
 constexpr SDL_Color kSdlBlack{0x00, 0x00, 0x00, 0xff};
 

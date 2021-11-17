@@ -8,5 +8,4 @@ namespace {
 
 void widget::WFrame::Draw(gfx::Display* display) const {
   display->DrawRect(GetRect(), gfx::Color::K_DEBUG_GREEN);
-  display->DrawIcon(GetRect().UpperLeft(), WifiFullSignal16);
 }

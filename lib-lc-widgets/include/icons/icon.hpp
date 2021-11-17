@@ -3,11 +3,13 @@
 
 namespace lc::gfx {
 
-  typedef struct {
-    uint8_t height;
-    uint8_t width;
-    uint8_t data[];
-  } Icon;
+  template <uint8_t height, uint8_t width>
+  struct Icon {
+    static const uint8_t k_height = height;
+    static const uint8_t k_width = width;
+    static const uint16_t size = k_height * k_width;
+    const uint8_t data[size];
+  };
 
 }
 

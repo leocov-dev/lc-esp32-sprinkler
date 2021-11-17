@@ -1,7 +1,6 @@
 #include <SDL.h>
 
 #include <sprinkler/app.hpp>
-#include <sprinkler/constants.hpp>
 
 #include "sdl2/sdl-display.hpp"
 #include "sdl2/sdl-input-transcriber.hpp"
@@ -18,7 +17,7 @@ int main() {
   preferences::SDLPreferences prefs;
   auto restore_position = prefs.GetWindowPosition();
 
-  sdl::SDLDisplay display(kDisplayHeight, kDisplayWidth, restore_position);
+  sdl::SDLDisplay display(64, 128, restore_position);
   sprinkler::App app(&display);
   sdl::SDLInputTranscriber input_transcriber(&app);
 

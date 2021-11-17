@@ -12,32 +12,32 @@ gfx::Display::Display(int width, int height) : size_(Size{width, height}) {
 }
 
 void gfx::Display::DrawPixel(gfx::Point point, const gfx::Color& color) {
-  const auto context = widget_context_stack_.top();
-  point += context.origin;
+  const auto kContext = widget_context_stack_.top();
+  point += kContext.origin;
   DrawPixelInternal(point, color);
 }
 
 void gfx::Display::DrawRect(gfx::Rect rect, gfx::Color color) {
-  const auto context = widget_context_stack_.top();
-  rect.origin += context.origin;
+  const auto kContext = widget_context_stack_.top();
+  rect.origin += kContext.origin;
   DrawRectInternal(rect, color);
 }
 
 void gfx::Display::FillRect(gfx::Rect rect, gfx::Color color) {
-  const auto context = widget_context_stack_.top();
-  rect.origin += context.origin;
+  const auto kContext = widget_context_stack_.top();
+  rect.origin += kContext.origin;
   FillRectInternal(rect, color);
 }
 
 void gfx::Display::DrawCircle(gfx::Point center, int radius, gfx::Color color) {
-  const auto context = widget_context_stack_.top();
-  center += context.origin;
+  const auto kContext = widget_context_stack_.top();
+  center += kContext.origin;
   DrawCircleInternal(center, radius, color);
 }
 
 void gfx::Display::FillCircle(gfx::Point center, int radius, gfx::Color color) {
-  const auto context = widget_context_stack_.top();
-  center += context.origin;
+  const auto kContext = widget_context_stack_.top();
+  center += kContext.origin;
   FillCircleInternal(center, radius, color);
 }
 
@@ -45,24 +45,11 @@ void gfx::Display::PrintText(gfx::Point& cursor, const std::string& text, gfx::C
   if (gfxfont_ == nullptr)
     return;
 
-  const auto context = widget_context_stack_.top();
-  cursor += context.origin;
+  const auto kContext = widget_context_stack_.top();
+  cursor += kContext.origin;
 
   for (auto& c : text) {
     DrawChar(cursor, c, fg);
-  }
-}
-
-void gfx::Display::DrawIcon(gfx::Point origin, const gfx::Icon& icon) {
-  const auto context = widget_context_stack_.top();
-  origin += context.origin;
-
-  uint8_t x, y;
-  for (y = 0; y < icon.height; y++) {
-    for (x = 0; x < icon.width; x++) {
-      const uint8_t pixel = icon.data[x + (icon.width * y)];
-      DrawPixel(origin + Point{x, y}, pixel > 0 ? gfx::Color::K_BLACK : gfx::Color::K_WHITE);
-    }
   }
 }
 

@@ -19,7 +19,7 @@ namespace sprinkler::sdl {
 
   class SDLDisplay : public gfx::Display {
   public:
-    SDLDisplay(int height, int width, gfx::Point position);
+    SDLDisplay(int height, int width, gfx::Point position, int scale_factor = 1);
     ~SDLDisplay() override = default;
 
     void Clear() override;
