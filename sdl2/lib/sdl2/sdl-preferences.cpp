@@ -5,14 +5,15 @@
 
 #include <filesystem>
 
-#include "widgets/string-utils.hpp"
+#include "gfx/primitives/point.hpp"
+#include "utils/string-utils.hpp"
 
 namespace {
   namespace fs = std::filesystem;
   namespace gfx = lc::gfx;
 }  // namespace
 
-preferences::SDLPreferences::SDLPreferences()
+preferences::SdlPreferences::SdlPreferences()
     : pref_root_(SDL_GetPrefPath("lc-esp32-sprinkler", "app")) {
   fs::path dir(pref_root_);
   fs::path file("preferences.ini");
@@ -20,7 +21,7 @@ preferences::SDLPreferences::SDLPreferences()
   pref_file_->read(pref_ini_);
 }
 
-gfx::Point preferences::SDLPreferences::GetWindowPosition() {
+gfx::Point preferences::SdlPreferences::GetWindowPosition() {
   gfx::Point position{SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED};
 
   if (pref_ini_["window"].has("pos")) {
@@ -34,11 +35,11 @@ gfx::Point preferences::SDLPreferences::GetWindowPosition() {
   return position;
 }
 
-preferences::SDLPreferences::~SDLPreferences() {
+preferences::SdlPreferences::~SdlPreferences() {
   SDL_free(pref_root_);
 }
 
-void preferences::SDLPreferences::SaveWindowPosition(SDL_Window* window) {
+void preferences::SdlPreferences::SaveWindowPosition(SDL_Window* window) {
   int x, y, top_border;
 
   std::stringstream ss;

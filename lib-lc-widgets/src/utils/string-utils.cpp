@@ -1,4 +1,4 @@
-#include "widgets/string-utils.hpp"
+#include "utils/string-utils.hpp"
 
 #include <sstream>
 

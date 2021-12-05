@@ -1,9 +1,9 @@
-#ifndef LCESP32SPRINKLER_SDL2_LIB_SDL2_SDL_INPUT_TRANSCRIBER_HPP_
-#define LCESP32SPRINKLER_SDL2_LIB_SDL2_SDL_INPUT_TRANSCRIBER_HPP_
+#ifndef LC_ESP32_SPRINKLER_SDL2_LIB_SDL2_SDL_INPUT_TRANSCRIBER_HPP_
+#define LC_ESP32_SPRINKLER_SDL2_LIB_SDL2_SDL_INPUT_TRANSCRIBER_HPP_
 
 #include <SDL.h>
 
-#include "widgets/input-event-handler.hpp"
+#include "input/input-event-handler.hpp"
 
 namespace {
   namespace input = lc::input;
@@ -11,12 +11,12 @@ namespace {
 
 namespace sprinkler::sdl {
 
-  class SDLInputTranscriber {
+  class SdlInputTranscriber {
   public:
-    explicit SDLInputTranscriber(input::InputEventHandler* handler) : handler_(handler) {}
+    explicit SdlInputTranscriber(input::InputEventHandler* handler) : handler_(handler) {}
 
-    void dispatchEvents();
-    [[nodiscard]] bool shouldQuit() const;
+    void DispatchEvents();
+    [[nodiscard]] bool ShouldQuit() const;
 
   private:
     input::InputEventHandler* handler_;
@@ -26,4 +26,4 @@ namespace sprinkler::sdl {
 
 }  // namespace sprinkler::sdl
 
-#endif  // LCESP32SPRINKLER_SDL2_LIB_SDL2_SDL_INPUT_TRANSCRIBER_HPP_
+#endif  // LC_ESP32_SPRINKLER_SDL2_LIB_SDL2_SDL_INPUT_TRANSCRIBER_HPP_

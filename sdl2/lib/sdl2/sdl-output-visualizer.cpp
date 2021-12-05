@@ -6,7 +6,7 @@
 #include "sdl-utils.hpp"
 #include "sdl-window-icon.hpp"
 
-SDLOutputVisualizer::SDLOutputVisualizer(int x, int y) {
+SdlOutputVisualizer::SdlOutputVisualizer(int x, int y) {
   window_ = std::unique_ptr<SDL_Window, SDLWindowDeleter>(
       SDL_CreateWindow("lcSprinkler", x, y, 128 * kDisplayScaleFactor, 16 * kDisplayScaleFactor,
                        SDL_WINDOW_SHOWN + SDL_WINDOW_BORDERLESS));
@@ -33,16 +33,16 @@ SDLOutputVisualizer::SDLOutputVisualizer(int x, int y) {
   }
 };
 
-void SDLOutputVisualizer::Clear() {
+void SdlOutputVisualizer::Clear() {
   SetRenderDrawColor(renderer_.get(), gfx::Color::K_WHITE);
   SDL_RenderClear(renderer_.get());
 }
 
-void SDLOutputVisualizer::Refresh() { SDL_RenderPresent(renderer_.get()); }
+void SdlOutputVisualizer::Refresh() { SDL_RenderPresent(renderer_.get()); }
 
-void SDLOutputVisualizer::BindToWindow(SDL_Window *window) { bound_window_ = window; }
+void SdlOutputVisualizer::BindToWindow(SDL_Window *window) { bound_window_ = window; }
 
-void SDLOutputVisualizer::Tick() {
+void SdlOutputVisualizer::Tick() {
   Clear();
   Refresh();
 
@@ -64,4 +64,4 @@ void SDLOutputVisualizer::Tick() {
     SDL_SetWindowPosition(window_.get(), pos_x, pos_y + height + bottom_border_width);
   }
 }
-SDL_Window *SDLOutputVisualizer::GetWindow() { return window_.get(); }
+SDL_Window * SdlOutputVisualizer::GetWindow() { return window_.get(); }

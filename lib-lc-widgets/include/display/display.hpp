@@ -2,16 +2,18 @@
 Inspired by deskmate by Raphael Baron https://github.com/rbaron/deskmate
 */
 
-#ifndef LCWIDGETS_LIB_LC_WIDGETS_INCLUDE_DISPLAY_HPP_
-#define LCWIDGETS_LIB_LC_WIDGETS_INCLUDE_DISPLAY_HPP_
+#ifndef LC_ESP32_SPRINKLER_LIB_LC_WIDGETS_INCLUDE_WIDGETS_DISPLAY_HPP_
+#define LC_ESP32_SPRINKLER_LIB_LC_WIDGETS_INCLUDE_WIDGETS_DISPLAY_HPP_
 
 #include <stack>
 #include <string>
 
 #include "adafruit-gfx/gfxfont.h"
-#include "color.hpp"
-#include "icons/icon.hpp"
-#include "transform.hpp"
+#include "gfx/color.hpp"
+#include "gfx/image.hpp"
+#include "gfx/primitives/transform.hpp"
+#include "gfx/primitives/point.hpp"
+#include "gfx/primitives/rect.hpp"
 
 namespace lc::gfx {
 
@@ -49,7 +51,7 @@ namespace lc::gfx {
     void DrawCircle(Point center, int radius, Color color);
     void FillCircle(Point center, int radius, Color color);
     void PrintText(Point& cursor, const std::string& text, Color fg);
-    template <uint8_t h, uint8_t w> void DrawIcon(Point origin, const Icon<h, w>& icon);
+    template <uint8_t h, uint8_t w> void DrawImage(Point origin, const Image<h, w>& icon);
 
   private:
     void DrawChar(Point& cursor, unsigned char c, Color& color);
@@ -67,7 +69,7 @@ namespace lc::gfx {
 }  // namespace lc::gfx
 
 template<uint8_t h, uint8_t w>
-void lc::gfx::Display::DrawIcon(Point origin, const gfx::Icon<h, w>& icon) {
+void lc::gfx::Display::DrawImage(Point origin, const gfx::Image<h, w>& icon) {
   auto context = widget_context_stack_.top();
   origin += context.origin;
 
@@ -80,4 +82,4 @@ void lc::gfx::Display::DrawIcon(Point origin, const gfx::Icon<h, w>& icon) {
   }
 }
 
-#endif  // LCWIDGETS_LIB_LC_WIDGETS_INCLUDE_DISPLAY_HPP_
+#endif  // LC_ESP32_SPRINKLER_LIB_LC_WIDGETS_INCLUDE_WIDGETS_DISPLAY_HPP_

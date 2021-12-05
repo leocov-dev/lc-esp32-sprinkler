@@ -4,9 +4,10 @@
 #include <SDL.h>
 #include <SDL2_gfxPrimitives.h>
 
-#include "widgets/color.hpp"
-#include "widgets/transform.hpp"
+#include "gfx/color.hpp"
+#include "gfx/primitives/transform.hpp"
 #include "sdl-constants.hpp"
+#include "gfx/primitives/rect.hpp"
 
 namespace {
   namespace gfx = lc::gfx;

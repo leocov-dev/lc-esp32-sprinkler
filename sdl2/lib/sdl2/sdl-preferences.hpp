@@ -4,17 +4,18 @@
 #include <SDL.h>
 #include <mini/ini.h>
 
-#include "widgets/transform.hpp"
+#include "gfx/primitives/transform.hpp"
+#include "gfx/primitives/point.hpp"
 
 namespace {
   namespace gfx = lc::gfx;
 }
 
 namespace preferences {
-  class SDLPreferences {
+  class SdlPreferences {
   public:
-    SDLPreferences();
-    ~SDLPreferences();
+    SdlPreferences();
+    ~SdlPreferences();
 
     gfx::Point GetWindowPosition();
 

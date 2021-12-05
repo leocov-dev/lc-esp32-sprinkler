@@ -3,8 +3,8 @@
 #include <SDL.h>
 
 lc::input::InputEvent Transcribe(SDL_Event& event) {
-  const auto action = event.type == SDL_KEYDOWN ? lc::input::InputAction::K_DOWN
-                                                : lc::input::InputAction::K_UP;
+  const auto action
+      = event.type == SDL_KEYDOWN ? lc::input::InputAction::K_DOWN : lc::input::InputAction::K_UP;
 
   switch (event.key.keysym.sym) {
     case SDLK_RIGHT:
@@ -18,7 +18,7 @@ lc::input::InputEvent Transcribe(SDL_Event& event) {
   }
 }
 
-void sprinkler::sdl::SDLInputTranscriber::dispatchEvents() {
+void sprinkler::sdl::SdlInputTranscriber::DispatchEvents() {
   while (SDL_PollEvent(&event_)) {
     switch (event_.type) {
       case SDL_QUIT:
@@ -33,12 +33,13 @@ void sprinkler::sdl::SDLInputTranscriber::dispatchEvents() {
         break;
       case SDL_KEYUP:
       case SDL_KEYDOWN:
-        handler_->HandleInputEvent(Transcribe(event_));
+        lc::input::InputEvent transcribed = Transcribe(event_);
+        handler_->HandleInputEvent(&transcribed);
         break;
     }
   }
 }
 
-bool sprinkler::sdl::SDLInputTranscriber::shouldQuit() const {
+bool sprinkler::sdl::SdlInputTranscriber::ShouldQuit() const {
   return should_quit_;
 }

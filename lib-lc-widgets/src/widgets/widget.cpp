@@ -1,19 +1,23 @@
 #include "widgets/widget.hpp"
 
-#include "widgets/display.hpp"
-#include "widgets/input-event.hpp"
-#include "widgets/transform.hpp"
+#include "display/display.hpp"
+#include "gfx/primitives/point.hpp"
+#include "gfx/primitives/rect.hpp"
+#include "input/input-event.hpp"
 
 namespace {
   namespace gfx = lc::gfx;
   namespace widget = lc::widget;
-}
+}  // namespace
 
-void widget::Widget::HandleInputEvent(input::InputEvent event) {
+void widget::Widget::HandleInputEvent(input::InputEvent* event) {
+  ProcessInputEvent(event);
+
+  if (event->consumed) return;
+
   for (auto child : children_) {
     child->HandleInputEvent(event);
   }
-  ProcessInputEvent(event);
 }
 
 void widget::Widget::SetParent(widget::Widget* parent) {
@@ -37,4 +41,12 @@ gfx::Rect widget::Widget::GetRect() const {
 
 void widget::Widget::SetLocalPosition(gfx::Point position) {
   origin_ = position;
+}
+
+gfx::Point widget::Widget::GetOrigin() const {
+  return origin_;
+}
+
+void lc::widget::Widget::ProcessInputEvent(lc::input::InputEvent* event) {
+  /* NOOP override in implementation */
 }

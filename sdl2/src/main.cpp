@@ -14,17 +14,17 @@ int main() {
   SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
   SDL_Log("Starting...");
 
-  preferences::SDLPreferences prefs;
+  preferences::SdlPreferences prefs;
   auto restore_position = prefs.GetWindowPosition();
 
-  sdl::SDLDisplay display(64, 128, restore_position);
+  sdl::SdlDisplay display(64, 128, restore_position);
   sprinkler::App app(&display);
-  sdl::SDLInputTranscriber input_transcriber(&app);
+  sdl::SdlInputTranscriber input_transcriber(&app);
 
-  while (!input_transcriber.shouldQuit()) {
-    input_transcriber.dispatchEvents();
+  while (!input_transcriber.ShouldQuit()) {
+    input_transcriber.DispatchEvents();
     app.Tick();
-    SDL_Delay(10);  // required to prevent stalling draw thread
+    SDL_Delay(250);  // required to prevent stalling draw thread
   }
 
   SDL_Log("Closing...");

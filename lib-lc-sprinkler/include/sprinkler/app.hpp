@@ -4,31 +4,27 @@
 #include <memory>
 
 #include "components/info-bar.hpp"
-#include "widgets/display.hpp"
+#include "display/display.hpp"
 #include "widgets/w-frame.hpp"
 #include "widgets/widget.hpp"
+#include "app/app.hpp"
 
 namespace sprinkler {
 
   namespace gfx = lc::gfx;
   namespace widget = lc::widget;
   namespace input = lc::input;
+  namespace app = lc::app;
 
-  class App : public widget::Widget {
+  class App : public app::App {
   public:
-    explicit App(gfx::Display* display) : widget::Widget(display->GetSize()), display_(display) {
-      Init();
-    };
-    using widget::Widget::HandleInputEvent;
-    void Tick();
-    void Init();
+    using app::App::App;
+    void Tick() override;
 
   protected:
-    void Draw(gfx::Display* display) const override;
+    void Draw(gfx::Display* display) override;
 
   private:
-    gfx::Display* display_;
-
     std::unique_ptr<sprinkler::CInfoBar> info_bar_ = std::make_unique<sprinkler::CInfoBar>(
         gfx::Size{display_->GetSize().width, display_->GetSize().height / 4});
   };

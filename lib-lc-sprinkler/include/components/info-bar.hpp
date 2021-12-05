@@ -1,26 +1,27 @@
 #ifndef LC_ESP32_SPRINKLER_LIB_LC_SPRINKLER_INCLUDE_COMPONENTS_INFO_BAR_HPP_
 #define LC_ESP32_SPRINKLER_LIB_LC_SPRINKLER_INCLUDE_COMPONENTS_INFO_BAR_HPP_
 
+#include <algorithm>
+
 #include "widgets/widget.hpp"
 
 namespace sprinkler {
 
   namespace widget = lc::widget;
   namespace gfx = lc::gfx;
+  namespace input = lc::input;
 
   class CInfoBar : public widget::Widget {
   public:
     using Widget::Widget;
 
-    void SetSignalLevel(uint8_t level) { signal_level_ = level; };
-
   protected:
-    void Draw(gfx::Display* display) const override;
+    void Draw(gfx::Display* display) override;
+    void ProcessInputEvent(input::InputEvent* event) override;
+    void SetSignalLevel(int level);
 
   private:
-    void DrawSignalLevel(gfx::Display* display) const;
-
-    uint8_t signal_level_ = 0;
+    int signal_level_ = 0;
   };
 
 }  // namespace sprinkler

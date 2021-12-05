@@ -1,11 +1,11 @@
 #ifndef LC_ESP32_SPRINKLER_ESP_IDF_COMPONENTS_SPRINKLER_ESP_SSD_1306_DISPLAY_HPP_
 #define LC_ESP32_SPRINKLER_ESP_IDF_COMPONENTS_SPRINKLER_ESP_SSD_1306_DISPLAY_HPP_
 
-#include "widgets/display.hpp"
+#include "display/display.hpp"
 
 namespace sprinkler::esp {
 
-namespace gfx = sprinkler::gfx;
+namespace gfx = lc::gfx;
 
 class SSD1306Display : public  gfx::Display {
  public:

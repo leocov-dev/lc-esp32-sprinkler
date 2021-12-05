@@ -1,4 +1,6 @@
-#include "widgets/display.hpp"
+#include "display/display.hpp"
+#include "gfx/primitives/point.hpp"
+#include "gfx/primitives/rect.hpp"
 
 #include <bitset>
 #include <cstdint>

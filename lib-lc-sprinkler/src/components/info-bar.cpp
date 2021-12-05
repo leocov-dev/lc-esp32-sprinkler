@@ -2,16 +2,22 @@
 
 #include <string>
 
+#include "constants/icons/wifi.hpp"
 #include "fonts/medium.h"
 #include "fonts/small.h"
-#include "icons/wifi.hpp"
+#include "gfx/primitives/point.hpp"
+#include "widgets/w-icon-stateful.hpp"
+#include "widgets/w-icon.hpp"
 
-void sprinkler::CInfoBar::Draw(lc::gfx::Display* display) const {
-  DrawSignalLevel(display);
+void sprinkler::CInfoBar::Draw(lc::gfx::Display* display) {
+  lc::gfx::Point cursor{110, 0};
+  auto wifi_full = new lc::widget::WIcon<16, 16>(WifiFullSignal);
+  wifi_full->SetParent(this);
+  wifi_full->SetLocalPosition(cursor);
 
-  lc::gfx::Point cursor{1, 13};
+  cursor = lc::gfx::Point{1, 13};
   display->SetFont(lc::font::kFontSmall);
-  display->PrintText(cursor, "Sprinkler A", gfx::Color::K_BLACK);
+  display->PrintText(cursor, "Signal: " + std::to_string(signal_level_), gfx::Color::K_BLACK);
 
   display->SetFont(lc::font::kFontMedium);
   cursor = lc::gfx::Point{1, 28};
@@ -22,9 +28,36 @@ void sprinkler::CInfoBar::Draw(lc::gfx::Display* display) const {
   display->PrintText(cursor, "Sprinkler D", gfx::Color::K_BLACK);
 }
 
-void sprinkler::CInfoBar::DrawSignalLevel(lc::gfx::Display* display) const {
-  lc::gfx::Point cursor{110, 0};
-  //  display->SetFont(lc::font::kFontMedium);
-  //  display->PrintText(cursor, std::to_string(signal_level_), gfx::Color::K_BLACK);
-  display->DrawIcon(cursor, WifiFullSignal);
+void sprinkler::CInfoBar::ProcessInputEvent(input::InputEvent* event) {
+  if (event->action == input::InputAction::K_DOWN) {
+    switch (event->type) {
+      case input::InputType::K_NEXT:
+        SetSignalLevel(signal_level_ + 1);
+        event->Consume();
+        break;
+      case input::InputType::K_PREV:
+        SetSignalLevel(signal_level_ - 1);
+        event->Consume();
+        break;
+      default:
+        break;
+    }
+  }
 }
+
+void sprinkler::CInfoBar::SetSignalLevel(int level) {
+  std::cout << "set: " << std::to_string(level) << std::endl;
+  signal_level_ = std::clamp<int>(level, 0, 4);
+  std::cout << "clamped: " << std::to_string(signal_level_) << std::endl;
+}
+
+// void sprinkler::CInfoBar::DrawSignalLevel(lc::gfx::Display* display) {
+//   lc::gfx::Point cursor{110, 0};
+//   //  display->SetFont(lc::font::kFontMedium);
+//   //  display->PrintText(cursor, std::to_string(signal_level_), gfx::Color::K_BLACK);
+//
+//   auto wifi_icon = new lc::widget::WIconStateful<16, 16>(
+//       WifiFullSignal, WifiMedSignal, WifiPartialSignal, WifiNoSignal);
+//
+//   display->DrawIcon<16, 16>(cursor, wifi_icon);
+// }

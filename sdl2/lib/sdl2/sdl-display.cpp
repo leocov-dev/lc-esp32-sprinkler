@@ -5,11 +5,13 @@
 
 #include <iostream>
 
+#include "gfx/primitives/point.hpp"
+#include "gfx/primitives/rect.hpp"
 #include "sdl-constants.hpp"
 #include "sdl-utils.hpp"
 #include "sdl-window-icon.hpp"
 
-sprinkler::sdl::SDLDisplay::SDLDisplay(int height, int width, gfx::Point position, int scale_factor)
+sprinkler::sdl::SdlDisplay::SdlDisplay(int height, int width, gfx::Point position, int scale_factor)
     : Display(width, height) {
   window_ = std::unique_ptr<SDL_Window, SDLWindowDeleter>(SDL_CreateWindow(
       "lcSprinkler",
@@ -43,12 +45,12 @@ sprinkler::sdl::SDLDisplay::SDLDisplay(int height, int width, gfx::Point positio
   }
 }
 
-void sprinkler::sdl::SDLDisplay::Clear() {
+void sprinkler::sdl::SdlDisplay::Clear() {
   SetRenderDrawColor(renderer_.get(), gfx::Color::K_WHITE);
   SDL_RenderClear(renderer_.get());
 }
 
-void sprinkler::sdl::SDLDisplay::Refresh() {
+void sprinkler::sdl::SdlDisplay::Refresh() {
   SDL_SetRenderDrawColor(renderer_.get(), 200, 200, 200, 128);
   if (kDebug) {
     SDL_RenderDrawLine(
@@ -61,40 +63,40 @@ void sprinkler::sdl::SDLDisplay::Refresh() {
   SDL_RenderPresent(renderer_.get());
 }
 
-void sprinkler::sdl::SDLDisplay::DrawPixelInternal(const gfx::Point& point, const gfx::Color& color)
+void sprinkler::sdl::SdlDisplay::DrawPixelInternal(const gfx::Point& point, const gfx::Color& color)
     const {
   SetRenderDrawColor(renderer_.get(), color);
   SDL_RenderDrawPoint(renderer_.get(), point.x, point.y);
 }
 
-void sprinkler::sdl::SDLDisplay::DrawRectInternal(const gfx::Rect& rect, const gfx::Color& color)
+void sprinkler::sdl::SdlDisplay::DrawRectInternal(const gfx::Rect& rect, const gfx::Color& color)
     const {
   SDL_Rect sdl_rect = FromRect(rect);
   SetRenderDrawColor(renderer_.get(), color);
   SDL_RenderDrawRect(renderer_.get(), &sdl_rect);
 }
 
-void sprinkler::sdl::SDLDisplay::FillRectInternal(const gfx::Rect& rect, const gfx::Color& color)
+void sprinkler::sdl::SdlDisplay::FillRectInternal(const gfx::Rect& rect, const gfx::Color& color)
     const {
   SDL_Rect sdl_rect = FromRect(rect);
   SetRenderDrawColor(renderer_.get(), color);
   SDL_RenderFillRect(renderer_.get(), &sdl_rect);
 }
 
-void sprinkler::sdl::SDLDisplay::DrawCircleInternal(
+void sprinkler::sdl::SdlDisplay::DrawCircleInternal(
     const gfx::Point& center,
     int radius,
     const gfx::Color& color) const {
   circleColor(renderer_.get(), center.x, center.y, radius, HexFromColor(color));
 }
 
-void sprinkler::sdl::SDLDisplay::FillCircleInternal(
+void sprinkler::sdl::SdlDisplay::FillCircleInternal(
     const gfx::Point& center,
     int radius,
     const gfx::Color& color) const {
   filledCircleColor(renderer_.get(), center.x, center.y, radius, HexFromColor(color));
 }
 
-SDL_Window* sprinkler::sdl::SDLDisplay::GetWindow() {
+SDL_Window* sprinkler::sdl::SdlDisplay::GetWindow() {
   return window_.get();
 }

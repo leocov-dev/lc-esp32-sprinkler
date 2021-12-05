@@ -9,9 +9,9 @@
 
 // For visualizing the state of the sprinkler valve relays
 //
-class SDLOutputVisualizer {
+class SdlOutputVisualizer {
 public:
-  SDLOutputVisualizer(int x, int y);
+  SdlOutputVisualizer(int x, int y);
   void Clear();
   void Refresh();
   void BindToWindow(SDL_Window *window);
