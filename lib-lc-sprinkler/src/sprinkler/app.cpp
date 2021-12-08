@@ -1,9 +1,11 @@
 #include "sprinkler/app.hpp"
-#include "app/app.hpp"
+
 #include <iostream>
 
+#include "app/app.hpp"
+
 namespace {
-namespace gfx = lc::gfx;
+  namespace gfx = lc::gfx;
 }
 
 void sprinkler::App::Tick() {
@@ -12,10 +14,6 @@ void sprinkler::App::Tick() {
   display_->Refresh();
 }
 
-void sprinkler::App::Draw(gfx::Display *display) {
-  info_bar_->SetParent(this);
-}
-
-void lc::app::App::ProcessInputEvent(lc::input::InputEvent* event) {
-//  std::cout << event << std::endl;
-}
+// void lc::app::App::ProcessInputEvent(lc::input::InputEvent* event) {
+//   std::cout << event << std::endl;
+// }

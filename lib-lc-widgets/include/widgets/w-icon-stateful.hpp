@@ -10,7 +10,7 @@ namespace lc::widget {
   class WIconStateful : public Widget, WIcon<height, width> {
   public:
     using Widget::Widget;
-    explicit WIconStateful(gfx::Image<height, width> icons...);
+    explicit WIconStateful(gfx::Image<height, width> icons...): Widget(gfx::Size{height, width}) {};
 
 //  private:
 //    std::vector<gfx::Icon<height, width> *> iconList_;
@@ -21,8 +21,5 @@ namespace lc::widget {
 
   template <uint8_t height, uint8_t width>
   void WIconStateful<height, width>::Draw(gfx::Display* display) const {}
-
-  template <uint8_t height, uint8_t width>
-  WIconStateful<height, width>::WIconStateful(gfx::Image<height, width> icons, ...) {}
 }  // namespace lc::widget
 #endif  // LC_ESP32_SPRINKLER_LIB_LC_WIDGETS_INCLUDE_WIDGETS_W_ICON_STATEFUL_HPP_

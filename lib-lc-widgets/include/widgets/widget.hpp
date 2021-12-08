@@ -36,7 +36,7 @@ namespace lc::widget {
     /// widgets by default will ignore InputEvents
     /// subclasses should implement this if they need to
     /// utilize or change based on these events
-    virtual void ProcessInputEvent(input::InputEvent* event);
+    virtual void ProcessInputEvent(input::InputEvent* event) {};
 
     Widget* parent_ = nullptr;
     std::vector<Widget*> children_;

@@ -46,7 +46,3 @@ void widget::Widget::SetLocalPosition(gfx::Point position) {
 gfx::Point widget::Widget::GetOrigin() const {
   return origin_;
 }
-
-void lc::widget::Widget::ProcessInputEvent(lc::input::InputEvent* event) {
-  /* NOOP override in implementation */
-}

@@ -15,12 +15,12 @@ namespace lc::app {
   class App : public widget::Widget {
   public:
     explicit App(gfx::Display* display) : widget::Widget(display->GetSize()), display_(display){};
-//    using widget::Widget::HandleInputEvent;
+    //    using widget::Widget::HandleInputEvent;
     virtual void Tick() = 0;
-  protected:
-    void ProcessInputEvent(input::InputEvent* event) override;
 
+  protected:
     gfx::Display* display_;
+
   private:
   };
 }  // namespace lc::app

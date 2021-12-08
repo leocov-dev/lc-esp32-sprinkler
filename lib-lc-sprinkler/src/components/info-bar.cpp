@@ -2,18 +2,14 @@
 
 #include <string>
 
-#include "constants/icons/wifi.hpp"
 #include "fonts/medium.h"
 #include "fonts/small.h"
 #include "gfx/primitives/point.hpp"
-#include "widgets/w-icon-stateful.hpp"
 #include "widgets/w-icon.hpp"
 
 void sprinkler::CInfoBar::Draw(lc::gfx::Display* display) {
   lc::gfx::Point cursor{110, 0};
-  auto wifi_full = new lc::widget::WIcon<16, 16>(WifiFullSignal);
-  wifi_full->SetParent(this);
-  wifi_full->SetLocalPosition(cursor);
+  signal_icon_->SetLocalPosition(cursor);
 
   cursor = lc::gfx::Point{1, 13};
   display->SetFont(lc::font::kFontSmall);
@@ -29,7 +25,7 @@ void sprinkler::CInfoBar::Draw(lc::gfx::Display* display) {
 }
 
 void sprinkler::CInfoBar::ProcessInputEvent(input::InputEvent* event) {
-  if (event->action == input::InputAction::K_DOWN) {
+  if (event->action != input::InputAction::K_DOWN) {
     switch (event->type) {
       case input::InputType::K_NEXT:
         SetSignalLevel(signal_level_ + 1);
@@ -46,18 +42,5 @@ void sprinkler::CInfoBar::ProcessInputEvent(input::InputEvent* event) {
 }
 
 void sprinkler::CInfoBar::SetSignalLevel(int level) {
-  std::cout << "set: " << std::to_string(level) << std::endl;
   signal_level_ = std::clamp<int>(level, 0, 4);
-  std::cout << "clamped: " << std::to_string(signal_level_) << std::endl;
 }
-
-// void sprinkler::CInfoBar::DrawSignalLevel(lc::gfx::Display* display) {
-//   lc::gfx::Point cursor{110, 0};
-//   //  display->SetFont(lc::font::kFontMedium);
-//   //  display->PrintText(cursor, std::to_string(signal_level_), gfx::Color::K_BLACK);
-//
-//   auto wifi_icon = new lc::widget::WIconStateful<16, 16>(
-//       WifiFullSignal, WifiMedSignal, WifiPartialSignal, WifiNoSignal);
-//
-//   display->DrawIcon<16, 16>(cursor, wifi_icon);
-// }
