@@ -13,7 +13,7 @@ namespace lc::widget {
 
   template <uint8_t height, uint8_t width> class WIcon : public Widget {
   public:
-    using Widget::Widget;
+    WIcon() : Widget(gfx::Size{height, width}){};
     explicit WIcon(gfx::Image<height, width> icon) : Widget(gfx::Size{height, width}), icon_(icon){};
 
   protected:

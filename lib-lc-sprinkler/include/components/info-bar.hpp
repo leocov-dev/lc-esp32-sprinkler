@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "constants/icons/wifi.hpp"
+#include "widgets/w-icon-stateful.hpp"
 #include "widgets/w-icon.hpp"
 #include "widgets/widget.hpp"
 
@@ -17,8 +18,12 @@ namespace sprinkler {
   class CInfoBar : public widget::Widget {
   public:
     explicit CInfoBar(gfx::Size size) : widget::Widget(size) {
-      signal_icon_ = std::make_unique<widget::WIcon<16, 16>>(kWifiFullSignal);
-      signal_icon_->SetParent(this);
+      w_signal_icon_ = std::make_unique<widget::WIcon<16, 16>>(kWifiFullSignal);
+      w_signal_icon_->SetParent(this);
+
+      std::array<gfx::Image<16, 16>, 4> wifi_signal_images_array
+          = {kWifiFullSignal, kWifiMedSignal, kWifiPartialSignal, kWifiNoSignal};
+      w_signal_ = std::make_unique<widget::WIconStateful<4, 16, 16>>(wifi_signal_images_array);
     };
 
   protected:
@@ -28,7 +33,8 @@ namespace sprinkler {
 
   private:
     int signal_level_ = 0;
-    std::unique_ptr<widget::WIcon<16, 16>> signal_icon_;
+    std::unique_ptr<widget::WIcon<16, 16>> w_signal_icon_;
+    std::unique_ptr<widget::WIconStateful<4, 16, 16>> w_signal_;
   };
 
 }  // namespace sprinkler

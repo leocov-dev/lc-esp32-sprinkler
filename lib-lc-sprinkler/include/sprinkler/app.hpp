@@ -19,17 +19,17 @@ namespace sprinkler {
   class App : public app::App {
   public:
     explicit App(gfx::Display* display) : app::App(display) {
-      info_bar_ = std::make_unique<sprinkler::CInfoBar>(
+      w_info_bar_ = std::make_unique<sprinkler::CInfoBar>(
           gfx::Size{display_->GetSize().width, display_->GetSize().height / 4});
-      info_bar_->SetParent(this);
+      w_info_bar_->SetParent(this);
     };
     void Tick() override;
 
   protected:
-    void Draw(gfx::Display* display) override {};
+    void Draw(gfx::Display* display) override{};
 
   private:
-    std::unique_ptr<sprinkler::CInfoBar> info_bar_;
+    std::unique_ptr<sprinkler::CInfoBar> w_info_bar_;
   };
 
 }  // namespace sprinkler

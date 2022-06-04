@@ -9,7 +9,7 @@
 
 void sprinkler::CInfoBar::Draw(lc::gfx::Display* display) {
   lc::gfx::Point cursor{110, 0};
-  signal_icon_->SetLocalPosition(cursor);
+  w_signal_icon_->SetLocalPosition(cursor);
 
   cursor = lc::gfx::Point{1, 13};
   display->SetFont(lc::font::kFontSmall);
