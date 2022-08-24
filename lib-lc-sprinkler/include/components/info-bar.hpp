@@ -22,8 +22,10 @@ namespace sprinkler {
       w_signal_icon_->SetParent(this);
 
       std::array<gfx::Image<16, 16>, 4> wifi_signal_images_array
-          = {kWifiFullSignal, kWifiMedSignal, kWifiPartialSignal, kWifiNoSignal};
+          = {kWifiNoSignal, kWifiPartialSignal, kWifiMedSignal, kWifiFullSignal};
+
       w_signal_ = std::make_unique<widget::WIconStateful<4, 16, 16>>(wifi_signal_images_array);
+      w_signal_->SetParent(this);
     };
 
   protected:

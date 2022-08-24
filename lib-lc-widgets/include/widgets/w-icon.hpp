@@ -11,10 +11,12 @@
 
 namespace lc::widget {
 
-  template <uint8_t height, uint8_t width> class WIcon : public Widget {
+  template <uint8_t height, uint8_t width>
+  class WIcon : public Widget {
   public:
     WIcon() : Widget(gfx::Size{height, width}){};
     explicit WIcon(gfx::Image<height, width> icon) : Widget(gfx::Size{height, width}), icon_(icon){};
+    using Widget::GetOrigin;
 
   protected:
     void Draw(gfx::Display* display) override;

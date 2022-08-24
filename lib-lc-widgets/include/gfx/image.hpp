@@ -3,11 +3,12 @@
 
 namespace lc::gfx {
 
-  template <uint8_t height, uint8_t width> struct Image {
+  template <uint8_t height, uint8_t width>
+  struct Image {
     static const uint8_t k_height = height;
     static const uint8_t k_width = width;
     static const uint16_t size = k_height * k_width;
-    const uint8_t data[size];
+    const uint8_t data[size] = {};
   };
 
 }  // namespace lc::gfx

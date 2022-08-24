@@ -10,6 +10,8 @@
 void sprinkler::CInfoBar::Draw(lc::gfx::Display* display) {
   lc::gfx::Point cursor{110, 0};
   w_signal_icon_->SetLocalPosition(cursor);
+  cursor = lc::gfx::Point{80, 0};
+  w_signal_->SetLocalPosition(cursor);
 
   cursor = lc::gfx::Point{1, 13};
   display->SetFont(lc::font::kFontSmall);
@@ -42,5 +44,6 @@ void sprinkler::CInfoBar::ProcessInputEvent(input::InputEvent* event) {
 }
 
 void sprinkler::CInfoBar::SetSignalLevel(int level) {
-  signal_level_ = std::clamp<int>(level, 0, 4);
+  signal_level_ = std::clamp<int>(level, 0, 3);
+  w_signal_->SetState(signal_level_);
 }
