@@ -2,6 +2,7 @@
 #define LC_ESP32_SPRINKLER_LIB_LC_SPRINKLER_INCLUDE_COMPONENTS_INFO_BAR_HPP_
 
 #include <algorithm>
+#include <array>
 #include <memory>
 
 #include "constants/icons/wifi.hpp"

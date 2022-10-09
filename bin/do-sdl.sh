@@ -8,7 +8,7 @@ ROOT="$DIR/.."
 BUILD_DIR="$ROOT/build"
 
 cd "$ROOT"
-cmake -j 8 -GNinja -Wno-dev -B"$BUILD_DIR" .
+cmake -GNinja -Wno-dev -B"$BUILD_DIR" .
 
 ninja -C"$BUILD_DIR"
 

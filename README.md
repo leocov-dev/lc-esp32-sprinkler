@@ -10,7 +10,7 @@ abstracted app and it is fully working in the SDL desktop environment.
 cmake >3.16
 ninja (if using scripts in bin/ folder)
 esp-idf (if building esp32 firmware)
-sdl2 (if building desktop executable)
+sdl2, sdl2_ttf, sdl2_gfx (if building desktop executable)
 ```
 
 ### Structure
@@ -51,7 +51,7 @@ Meant for rapid development on the desktop, not intended to be used as a final
 product although it would be possible to run directly on a raspberry pi for example.
 
 ``` bash
-$ bin/do-spl.sh
+$ bin/do-sdl.sh
 ```
 
 ### Development
